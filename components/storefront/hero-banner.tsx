@@ -4,9 +4,9 @@ import { HeroBannerClient } from "@/components/storefront/hero-banner-client";
 const FALLBACK_BANNERS: PromoBanner[] = [
   {
     id: "fallback-banner-1",
-    title: "Bộ Sưu Tập\nThời Trang Cao Cấp",
+    title: "Bộ Sưu Tập Cao Cấp",
     description: "Khám phá những mẫu thiết kế độc quyền với chất lượng vượt trội, tôn vinh phong cách sang trọng và đẳng cấp của bạn.",
-    image_url: "/seo.jpg",
+    image_url: "",
     link_url: "/products",
     badge_text: "MỚI RA MẮT 2026",
     order_index: 1,

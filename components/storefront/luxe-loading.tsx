@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
+import { siteConfig } from "@/lib/config";
 
 interface LuxeLoadingProps {
   label?: string;
@@ -35,16 +36,16 @@ export function LuxeLoading({
         <div className="relative bg-card/80 dark:bg-slate-950/80 backdrop-blur-md px-8 py-5 rounded-2xl border border-purple-500/30 shadow-[0_0_30px_rgba(168,85,247,0.25)] flex flex-col items-center gap-3.5 animate-luxe-float">
           <div className="relative">
             {/* <div className="absolute -inset-1.5 rounded-lg bg-gradient-to-r from-violet-600 via-purple-500 to-indigo-500 blur-lg opacity-70 animate-pulse" /> */}
-            <Image src="/icons/luxecommerce.png" alt="Luxe Commerce" width={52} height={52} className="relative drop-shadow-md" />
+            <Image src="/icons/logo.png" alt={siteConfig.name} width={52} height={52} className="relative drop-shadow-md" />
           </div>
 
           {/* Shimmering Brand Name */}
           <div className="flex items-center tracking-tight text-3xl font-black">
             <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-fuchsia-400 dark:from-violet-300 dark:via-purple-200 dark:to-fuchsia-300 bg-clip-text text-transparent animate-shimmer-metallic drop-shadow-[0_0_12px_rgba(168,85,247,0.45)]">
-              Luxe
+              {siteConfig.shortName}
             </span>
             <span className="ml-0.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-800 dark:from-slate-100 dark:via-white dark:to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
-              Commerce
+              market
             </span>
             {/* <img src="/icons/star.png" alt="Star" width={24} height={24} className="ml-1.5 w-5 h-5 animate__animated animate__flash animate__infinite inline-block" /> */}
           </div>

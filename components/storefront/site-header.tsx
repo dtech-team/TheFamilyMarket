@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Search, ShoppingCart, Heart, Bell, User, Menu, LogOut, Package, HomeIcon, BoxIcon, UserIcon, LogOutIcon, Shield, MapPin, Settings, Sparkles, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/lib/config";
 import { Button } from "@/components/ui/button";
 import { useAuthModal } from "@/lib/store/use-auth-modal";
 import { useCartStore } from "@/lib/store/use-cart-store";
@@ -214,16 +215,16 @@ export function SiteHeader() {
                           <div className="group text-lg md:text-2xl font-black tracking-tighter flex-shrink-0 flex justify-center items-center gap-1.5 md:gap-2.5 transition-all duration-300 min-w-0 overflow-hidden">
                             <div className="relative shrink-0">
                               <div className="absolute -inset-1 rounded-full group-hover:opacity-80 transition duration-800 animate-pulse" />
-                              <Image src="/icons/luxecommerce.png" alt="Logo" width={28} height={28} className="relative md:w-[34px] md:h-[34px]" />
+                              <Image src="/icons/logo.png" alt="Logo" width={28} height={28} className="relative md:w-[34px] md:h-[34px]" />
                             </div>
                             <span className="flex items-center tracking-tight truncate">
                               <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-fuchsia-400 dark:from-violet-300 dark:via-purple-200 dark:to-fuchsia-300 bg-clip-text text-transparent animate-shimmer-metallic drop-shadow-[0_0_12px_rgba(168,85,247,0.45)]">
-                                Luxe
+                                {siteConfig.shortName}
                               </span>
                               <span className="ml-0.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-800 dark:from-slate-100 dark:via-white dark:to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] truncate">
-                                Commerce
+                                market
                               </span>
-                              <Image src="/icons/star.png" alt="Logo" width={20} height={20} className="ml-1 md:w-[25px] md:h-[25px] animate__animated animate__flash animate__infinite hidden sm:inline-block shrink-0" />
+                              {/* <Image src="/icons/star.png" alt="Logo" width={20} height={20} className="ml-1 md:w-[25px] md:h-[25px] animate__animated animate__flash animate__infinite hidden sm:inline-block shrink-0" /> */}
                             </span>
                           </div>
                           <p className="text-xs text-muted-foreground mt-0.5">
@@ -402,16 +403,16 @@ export function SiteHeader() {
           <Link href="/" className="group text-lg md:text-2xl font-black tracking-tighter flex-shrink-0 flex items-center gap-1.5 md:gap-2.5 transition-all duration-300 min-w-0 overflow-hidden">
             <div className="relative shrink-0">
               <div className="absolute -inset-1 rounded-full group-hover:opacity-80 transition duration-800 animate-pulse" />
-              <Image src="/icons/luxecommerce.png" alt="Logo" width={28} height={28} className="relative md:w-[34px] md:h-[34px]" />
+              <Image src="/icons/logo.png" alt="Logo" width={28} height={28} className="relative md:w-[34px] md:h-[34px]" />
             </div>
             <span className="flex items-center tracking-tight truncate">
               <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-fuchsia-400 dark:from-violet-300 dark:via-purple-200 dark:to-fuchsia-300 bg-clip-text text-transparent animate-shimmer-metallic drop-shadow-[0_0_12px_rgba(168,85,247,0.45)]">
-                Luxe
+                {siteConfig.shortName}
               </span>
               <span className="ml-0.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-800 dark:from-slate-100 dark:via-white dark:to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] truncate">
-                Commerce
+                market
               </span>
-              <Image src="/icons/star.png" alt="Logo" width={20} height={20} className="ml-1 md:w-[25px] md:h-[25px] animate__animated animate__flash animate__infinite hidden sm:inline-block shrink-0" />
+              {/* <Image src="/icons/star.png" alt="Logo" width={20} height={20} className="ml-1 md:w-[25px] md:h-[25px] animate__animated animate__flash animate__infinite hidden sm:inline-block shrink-0" /> */}
             </span>
           </Link>
         </div>

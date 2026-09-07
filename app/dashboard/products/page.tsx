@@ -257,7 +257,7 @@ function ProductsPageContent() {
         </div>
       ) : products.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-32 px-4 text-center bg-card/30 rounded-[32px] border border-border/50 border-dashed relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          {/* <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" /> */}
           <div className="bg-primary/10 mb-6 rounded-full p-6 relative">
              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full animate-pulse" />
             <IconPackage className="text-primary size-12 relative z-10" />
@@ -273,7 +273,7 @@ function ProductsPageContent() {
           {!search && role === "admin" && (
             <Button
               onClick={openCreate}
-              className="mt-8 gap-2 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform duration-300"
+              className="cursor-pointer mt-8 gap-2 rounded-full px-8 h-12 font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform duration-300"
             >
               <IconPlus className="size-5" />
               Thêm sản phẩm ngay

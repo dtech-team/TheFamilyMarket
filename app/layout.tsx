@@ -8,11 +8,13 @@ import Providers from "@/components/providers";
 
 const prompt = Prompt({ subsets: ["latin", "thai", "vietnamese"], weight: ["300", "400", "500", "600", "700", "800", "900"] });
 
+import { siteConfig } from "@/lib/config";
+
 export const metadata: Metadata = {
-  title: "LuxeCommerce - Mua sắm hàng hiệu",
-  description: "Trải nghiệm mua sắm đẳng cấp với những sản phẩm được tuyển chọn kỹ lưỡng.",
+  title: `${siteConfig.name} - Mua sắm thông minh`,
+  description: siteConfig.description,
   icons: {
-    icon: "/icons/luxecommerce.png?v=2",
+    icon: "/icons/logo.png?v=2",
   },
 };
 

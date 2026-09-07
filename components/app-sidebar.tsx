@@ -19,6 +19,7 @@ import {
   IconBell
 } from "@tabler/icons-react";
 
+import { siteConfig } from "@/lib/config";
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
@@ -75,15 +76,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <Link href="/dashboard" className="flex items-center gap-3 group">
                 <div className="relative shrink-0 flex items-center justify-center">
-                  <Image src="/icons/luxecommerce.png" alt="Logo" width={28} height={28} className="relative size-7 group-data-[collapsible=icon]:size-6 transition-all duration-300" />
+                  <Image src="/icons/logo.png" alt="Logo" width={28} height={28} className="relative size-7 group-data-[collapsible=icon]:size-6 transition-all duration-300" />
                 </div>
                 <div className="flex flex-col group-data-[collapsible=icon]:hidden">
                   <span className="flex items-center text-[19px] font-black tracking-tighter truncate">
                     <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-fuchsia-400 dark:from-violet-300 dark:via-purple-200 dark:to-fuchsia-300 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(168,85,247,0.45)]">
-                      Luxe
+                      {siteConfig.shortName}
                     </span>
                     <span className="ml-0.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-800 dark:from-slate-100 dark:via-white dark:to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] truncate">
-                      Commerce
+                      market
                     </span>
                     <Image src="/icons/star.png" alt="Star" width={16} height={16} className="ml-1 animate__animated animate__flash animate__infinite shrink-0" />
                   </span>
