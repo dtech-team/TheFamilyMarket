@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Search, ShoppingCart, Heart, Bell, User, Menu, LogOut, Package, HomeIcon, BoxIcon, UserIcon, LogOutIcon, Shield, MapPin, Settings, Sparkles, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
+import { BrandLogo } from "@/components/ui/brand-logo";
 import { Button } from "@/components/ui/button";
 import { useAuthModal } from "@/lib/store/use-auth-modal";
 import { useCartStore } from "@/lib/store/use-cart-store";
@@ -157,7 +158,7 @@ export function SiteHeader() {
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="mr-1 md:mr-2 h-9 w-9">
-                  <Image src="/icons/menu2.png" alt="Logo" width={25} height={25} />
+                  <Image src="/icons/menu.png" alt="Logo" width={25} height={25} />
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[310px] sm:w-[360px] p-0 flex flex-col h-full bg-background/80 backdrop-blur-2xl overflow-hidden border-r border-border/50 shadow-2xl">
@@ -217,15 +218,7 @@ export function SiteHeader() {
                               <div className="absolute -inset-1 rounded-full group-hover:opacity-80 transition duration-800 animate-pulse" />
                               <Image src="/icons/logo.png" alt="Logo" width={28} height={28} className="relative md:w-[34px] md:h-[34px]" />
                             </div>
-                            <span className="flex items-center tracking-tight truncate">
-                              <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-fuchsia-400 dark:from-violet-300 dark:via-purple-200 dark:to-fuchsia-300 bg-clip-text text-transparent animate-shimmer-metallic drop-shadow-[0_0_12px_rgba(168,85,247,0.45)]">
-                                {siteConfig.shortName}
-                              </span>
-                              <span className="ml-0.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-800 dark:from-slate-100 dark:via-white dark:to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] truncate">
-                                market
-                              </span>
-                              {/* <Image src="/icons/star.png" alt="Logo" width={20} height={20} className="ml-1 md:w-[25px] md:h-[25px] animate__animated animate__flash animate__infinite hidden sm:inline-block shrink-0" /> */}
-                            </span>
+                            <BrandLogo />
                           </div>
                           <p className="text-xs text-muted-foreground mt-0.5">
                             Đăng nhập để nhận ưu đãi & theo dõi đơn hàng
@@ -405,15 +398,7 @@ export function SiteHeader() {
               <div className="absolute -inset-1 rounded-full group-hover:opacity-80 transition duration-800 animate-pulse" />
               <Image src="/icons/logo.png" alt="Logo" width={28} height={28} className="relative md:w-[34px] md:h-[34px]" />
             </div>
-            <span className="flex items-center tracking-tight truncate">
-              <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-fuchsia-400 dark:from-violet-300 dark:via-purple-200 dark:to-fuchsia-300 bg-clip-text text-transparent animate-shimmer-metallic drop-shadow-[0_0_12px_rgba(168,85,247,0.45)]">
-                {siteConfig.shortName}
-              </span>
-              <span className="ml-0.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-800 dark:from-slate-100 dark:via-white dark:to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] truncate">
-                market
-              </span>
-              {/* <Image src="/icons/star.png" alt="Logo" width={20} height={20} className="ml-1 md:w-[25px] md:h-[25px] animate__animated animate__flash animate__infinite hidden sm:inline-block shrink-0" /> */}
-            </span>
+            <BrandLogo />
           </Link>
         </div>
 

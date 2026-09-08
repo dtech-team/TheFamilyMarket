@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { X, Mail, Lock, User, KeyRound, Loader2, ArrowRight, ShieldCheck, Zap } from "lucide-react";
 import Image from "next/image";
 import { siteConfig } from "@/lib/config";
+import { BrandLogo } from "@/components/ui/brand-logo";
 
 export function AuthModal() {
   const router = useRouter();
@@ -200,15 +201,8 @@ export function AuthModal() {
                 <div className="absolute -inset-1 rounded-full group-hover:opacity-80 transition duration-800 animate-pulse" />
                 <Image src="/icons/logo.png" alt="Logo" width={28} height={28} className="relative md:w-[34px] md:h-[34px]" />
               </div>
-              <span className="flex items-center tracking-tight truncate">
-                <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-fuchsia-400 dark:from-violet-300 dark:via-purple-200 dark:to-fuchsia-300 bg-clip-text text-transparent animate-shimmer-metallic drop-shadow-[0_0_12px_rgba(168,85,247,0.45)]">
-                  {siteConfig.shortName}
-                </span>
-                <span className="ml-0.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-800 dark:from-slate-100 dark:via-white dark:to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] truncate">
-                  market
-                </span>
-                <Image src="/icons/star.png" alt="Logo" width={20} height={20} className="ml-1 md:w-[25px] md:h-[25px] animate__animated animate__flash animate__infinite hidden sm:inline-block shrink-0" />
-              </span>
+              <BrandLogo />
+              <Image src="/icons/star.png" alt="Logo" width={20} height={20} className="ml-1 md:w-[25px] md:h-[25px] animate__animated animate__flash animate__infinite hidden sm:inline-block shrink-0" />
             </div>
 
             <p className="text-muted-foreground text-[14.5px] mt-2 font-medium">

@@ -275,7 +275,7 @@ function SidebarTrigger({
       {...props}
     >
       <Image 
-        src="/icons/menu_toggle.png" 
+        src="/icons/menu.png" 
         alt="Toggle Sidebar" 
         width={25} 
         height={25} 

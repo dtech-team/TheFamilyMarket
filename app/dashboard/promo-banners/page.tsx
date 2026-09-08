@@ -431,25 +431,24 @@ function PromoBannersPageContent() {
     e.preventDefault();
     setFormError("");
 
-    if (!formData.title.trim()) {
-      setFormError("Vui lòng nhập tiêu đề");
-      return;
-    }
     if (!formData.image_url.trim()) {
-      setFormError("Vui lòng nhập đường dẫn hình ảnh");
+      setFormError("Vui lòng chọn hình ảnh banner");
       return;
     }
 
     setIsSubmitting(true);
 
-    let finalOrderIndex = Number(formData.order_index) || 0;
+    const bannerTitle = formData.title.trim() || `Banner ${new Date().toLocaleString("vi-VN")}`;
+    const submitData = { ...formData, title: bannerTitle };
+
+    let finalOrderIndex = Number(submitData.order_index) || 0;
     const maxOrder = banners.length > 0 ? Math.max(...banners.map(b => Number(b.order_index) || 0)) : 0;
 
     if (dialogMode === "create") {
       if (finalOrderIndex <= 0 || banners.some(b => b.order_index === finalOrderIndex)) {
         finalOrderIndex = maxOrder + 1;
       }
-      const { error } = await createPromoBanner({ ...formData, order_index: finalOrderIndex });
+      const { error } = await createPromoBanner({ ...submitData, order_index: finalOrderIndex });
       if (error) {
         setFormError(error.message || "Lỗi khi tạo banner");
       } else {
@@ -461,7 +460,7 @@ function PromoBannersPageContent() {
       if (banners.some(b => b.id !== selectedBanner.id && b.order_index === finalOrderIndex)) {
         finalOrderIndex = maxOrder + 1;
       }
-      const { error } = await updatePromoBanner(selectedBanner.id, { ...formData, order_index: finalOrderIndex });
+      const { error } = await updatePromoBanner(selectedBanner.id, { ...submitData, order_index: finalOrderIndex });
       if (error) {
         setFormError(error.message || "Lỗi khi cập nhật banner");
       } else {
@@ -696,47 +695,6 @@ function PromoBannersPageContent() {
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="title">Tiêu đề chính *</Label>
-                <Input
-                  id="title"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="VD: Giảm đến 40%"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="subtitle">Tiêu đề phụ</Label>
-                  <Input
-                    id="subtitle"
-                    value={formData.subtitle}
-                    onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-                    placeholder="VD: Tuần lễ công nghệ"
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="badge_text">Chữ trên Nhãn (Badge)</Label>
-                  <Input
-                    id="badge_text"
-                    value={formData.badge_text}
-                    onChange={(e) => setFormData({ ...formData, badge_text: e.target.value })}
-                    placeholder="VD: Hot, Mới"
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-2">
-                <Label htmlFor="description">Mô tả chi tiết</Label>
-                <Input
-                  id="description"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Nhập mô tả ngắn gọn..."
-                />
-              </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="image_url">Hình ảnh Banner *</Label>

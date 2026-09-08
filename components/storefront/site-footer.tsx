@@ -3,6 +3,7 @@ import { CreditCard, FacebookIcon, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IconBrandInstagram } from "@tabler/icons-react";
 import { siteConfig } from "@/lib/config";
+import { BrandLogo } from "@/components/ui/brand-logo";
 
 export function SiteFooter() {
   return (
@@ -11,14 +12,7 @@ export function SiteFooter() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 px-4 md:px-10 py-16 max-w-7xl mx-auto w-full relative z-10">
         <div className="col-span-1">
           <Link href="/" className="group text-xl md:text-2xl font-black tracking-tighter inline-flex items-center gap-2.5 mb-6 transition-all duration-300">
-            <span className="flex items-center tracking-tight">
-              <span className="bg-gradient-to-r from-violet-500 via-purple-400 to-fuchsia-400 dark:from-violet-300 dark:via-purple-200 dark:to-fuchsia-300 bg-clip-text text-transparent animate-shimmer-metallic drop-shadow-[0_0_12px_rgba(168,85,247,0.45)]">
-                {siteConfig.shortName}
-              </span>
-              <span className="ml-0.5 bg-gradient-to-r from-slate-700 via-slate-500 to-slate-800 dark:from-slate-100 dark:via-white dark:to-slate-300 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
-                market
-              </span>
-            </span>
+            <BrandLogo />
           </Link>
           <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{siteConfig.description}</p>
           <div className="flex gap-3">
