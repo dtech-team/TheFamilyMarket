@@ -1,12 +1,17 @@
 import { createClient } from "jsr:@supabase/supabase-js@2";
-import { getGmailAccessToken, fetchUnreadMessageIds, fetchMessageDetail, markMessageAsRead } from "./gmail.service.ts";
+import {
+  getGmailAccessToken,
+  fetchUnreadMessageIds,
+  fetchMessageDetail,
+  markMessageAsRead
+} from "./gmail.service.ts";
 import { parseVcbEmail } from "./parser.service.ts";
 import { matchTransactionWithPayment } from "./matcher.service.ts";
 import { ParsedTransaction } from "./types.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type"
 };
 
 Deno.serve(async (req) => {
@@ -45,7 +50,7 @@ Deno.serve(async (req) => {
         amount: Number(bodyData.test_parsed.amount || 0),
         description: bodyData.test_parsed.description || "LX-TEST",
         transactionTime: new Date().toISOString(),
-        rawContent: "Simulation Test Content",
+        rawContent: "Simulation Test Content"
       };
 
       const matchResult = await matchTransactionWithPayment(supabase, mockParsed);
@@ -53,7 +58,7 @@ Deno.serve(async (req) => {
         JSON.stringify({
           success: true,
           mode: "SIMULATION",
-          matchResult,
+          matchResult
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
       );
@@ -69,7 +74,8 @@ Deno.serve(async (req) => {
       return new Response(
         JSON.stringify({
           success: false,
-          error: "Không thể lấy Gmail Access Token. Hãy kiểm tra GMAIL_CLIENT_ID / SECRET / REFRESH_TOKEN",
+          error:
+            "Không thể lấy Gmail Access Token. Hãy kiểm tra GMAIL_CLIENT_ID / SECRET / REFRESH_TOKEN"
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
       );
@@ -108,9 +114,9 @@ Deno.serve(async (req) => {
           parsed: {
             amount: parsed.amount,
             code: parsed.description,
-            sender: parsed.senderName,
+            sender: parsed.senderName
           },
-          matchResult,
+          matchResult
         });
       } catch (innerErr: any) {
         console.error(`❌ [Verify-Bank-Payment] Lỗi khi xử lý email ID ${msgId}:`, innerErr);
@@ -123,7 +129,7 @@ Deno.serve(async (req) => {
         mode: "GMAIL_LIVE",
         totalChecked: messageIds.length,
         matchedCount,
-        results,
+        results
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
     );

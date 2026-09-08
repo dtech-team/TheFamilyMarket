@@ -415,7 +415,6 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 [functions.create-user]
 enabled = true
 verify_jwt = false
-import_map = "./functions/create-user/deno.json"
 # Uncomment to specify a custom file path to the entrypoint.
 # Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
 entrypoint = "./functions/create-user/index.ts"
@@ -426,7 +425,6 @@ entrypoint = "./functions/create-user/index.ts"
 [functions.send-otp]
 enabled = true
 verify_jwt = false
-import_map = "./functions/send-otp/deno.json"
 # Uncomment to specify a custom file path to the entrypoint.
 # Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
 entrypoint = "./functions/send-otp/index.ts"
@@ -437,7 +435,6 @@ entrypoint = "./functions/send-otp/index.ts"
 [functions.verify-otp]
 enabled = true
 verify_jwt = false
-import_map = "./functions/verify-otp/deno.json"
 # Uncomment to specify a custom file path to the entrypoint.
 # Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
 entrypoint = "./functions/verify-otp/index.ts"
@@ -448,7 +445,6 @@ entrypoint = "./functions/verify-otp/index.ts"
 [functions.register]
 enabled = true
 verify_jwt = false
-import_map = "./functions/register/deno.json"
 # Uncomment to specify a custom file path to the entrypoint.
 # Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
 entrypoint = "./functions/register/index.ts"
@@ -456,13 +452,9 @@ entrypoint = "./functions/register/index.ts"
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/register/*.html" ]
 
-[functions.dummy_test]
+
+[functions.verify-bank-payment]
 enabled = true
 verify_jwt = false
-import_map = "./functions/dummy_test/deno.json"
-# Uncomment to specify a custom file path to the entrypoint.
-# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
-entrypoint = "./functions/dummy_test/index.ts"
-# Specifies static files to be bundled with the function. Supports glob patterns.
-# For example, if you want to serve static HTML pages in your function:
-# static_files = [ "./functions/dummy_test/*.html" ]
+entrypoint = "./functions/verify-bank-payment/index.ts"
+
