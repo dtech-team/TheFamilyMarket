@@ -8,17 +8,19 @@ export const revalidate = 0;
 
 export default function StorefrontHomePage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 lg:py-6">
-      <div className="flex gap-6 items-start">
-        {/* Left: Category Sidebar (Desktop only, sticky) */}
+    <div className="max-w-[1400px] mx-auto px-4 lg:px-6 py-4 lg:py-6 space-y-8">
+      {/* Top row: Sidebar + Banner */}
+      <div className="flex gap-4 lg:gap-6 items-stretch ">
         <HomeCategorySidebar />
-
-        {/* Right: Main Content */}
-        <div className="flex-1 min-w-0 space-y-8">
+        <div className="flex-1 min-w-0 flex flex-col ">
           <HeroBanner />
-          <FlashSale />
-          <NewArrivals />
         </div>
+      </div>
+
+      {/* Below rows */}
+      <div className="space-y-8">
+        <FlashSale />
+        <NewArrivals />
       </div>
     </div>
   );

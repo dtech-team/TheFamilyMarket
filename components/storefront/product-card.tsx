@@ -98,7 +98,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </Link>
         <div className="flex justify-between items-end flex-wrap gap-x-3 gap-y-1 mt-auto pt-2">
-          <div className="flex flex-col items-start gap-1">
+          <div className="flex  items-end gap-1">
             <span className={cn(
               "font-extrabold text-xl leading-none",
               isOutOfStock ? "text-muted-foreground" : "text-red-600"

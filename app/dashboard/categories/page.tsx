@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState, useCallback } from "react";
+import { Suspense, useEffect, useState, useCallback, useRef } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import RoleGuard from "@/components/guards/role-guard";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -46,6 +46,8 @@ import {
   IconLoader2,
   IconTags,
   IconSearch,
+  IconUpload,
+  IconX,
 } from "@tabler/icons-react";
 import { supabase } from "@/lib/supabase/client";
 import Image from "next/image";
@@ -53,6 +55,7 @@ import Image from "next/image";
 type Category = {
   id: string;
   name: string;
+  image_url?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -108,6 +111,9 @@ function CategoriesPageContent() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [name, setName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -151,6 +157,7 @@ function CategoriesPageContent() {
   const openCreate = () => {
     setEditingCategory(null);
     setName("");
+    setImageUrl("");
     setErrorMsg("");
     setDialogOpen(true);
   };
@@ -159,8 +166,46 @@ function CategoriesPageContent() {
   const openEdit = (category: Category) => {
     setEditingCategory(category);
     setName(category.name);
+    setImageUrl(category.image_url || "");
     setErrorMsg("");
     setDialogOpen(true);
+  };
+
+  // Handle image upload
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+      setErrorMsg("Kích thước ảnh không được vượt quá 2MB");
+      return;
+    }
+
+    setUploadingImage(true);
+    setErrorMsg("");
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+      const filePath = `categories/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("public_assets")
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage
+        .from("public_assets")
+        .getPublicUrl(filePath);
+
+      setImageUrl(publicUrlData.publicUrl);
+    } catch (err: any) {
+      setErrorMsg(err.message || "Lỗi khi tải ảnh lên");
+    } finally {
+      setUploadingImage(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
   // Submit create/update
@@ -176,6 +221,7 @@ function CategoriesPageContent() {
     try {
       const payload = {
         name: name.trim(),
+        image_url: imageUrl || null,
       };
 
       if (editingCategory) {
@@ -269,6 +315,7 @@ function CategoriesPageContent() {
               <Table className="min-w-[500px]">
                 <TableHeader className="bg-muted/30">
                 <TableRow className="hover:bg-transparent border-border/50">
+                  <TableHead className="font-bold text-foreground h-12 w-[60px]">Icon</TableHead>
                   <TableHead className="font-bold text-foreground h-12">Tên danh mục</TableHead>
                   <TableHead className="font-bold text-foreground h-12">Ngày tạo</TableHead>
                   <TableHead className="font-bold text-foreground h-12 text-right">Hành động</TableHead>
@@ -295,6 +342,17 @@ function CategoriesPageContent() {
                 ) : (
                   categories.map((category) => (
                     <TableRow key={category.id} className="group/row transition-colors hover:bg-muted/50 border-border/50">
+                      <TableCell>
+                        {category.image_url ? (
+                          <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-border/50 bg-background/50">
+                            <Image src={category.image_url} alt={category.name} fill className="object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center border border-border/50">
+                            <IconTags className="size-5 text-muted-foreground/50" />
+                          </div>
+                        )}
+                      </TableCell>
                       <TableCell className="font-medium text-foreground">{category.name}</TableCell>
                       <TableCell>{formatDate(category.created_at)}</TableCell>
                       <TableCell className="text-right">
@@ -386,6 +444,68 @@ function CategoriesPageContent() {
               {errorMsg && (
                 <p className="text-sm text-red-500 mt-1 font-medium">{errorMsg}</p>
               )}
+            </div>
+
+            <div className="space-y-2">
+              <Label className="font-semibold">Ảnh đại diện / Icon</Label>
+              <div className="flex items-start gap-4">
+                {imageUrl ? (
+                  <div className="relative w-24 h-24 rounded-xl border border-border/50 overflow-hidden bg-background/50 group">
+                    <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        className="h-8 w-8 rounded-full"
+                        onClick={() => setImageUrl("")}
+                      >
+                        <IconX className="size-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div 
+                    className="w-24 h-24 rounded-xl border-2 border-dashed border-border/60 bg-background/30 flex flex-col items-center justify-center text-muted-foreground cursor-pointer hover:bg-secondary/50 hover:border-primary/50 transition-colors"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    {uploadingImage ? (
+                      <IconLoader2 className="size-6 animate-spin text-primary" />
+                    ) : (
+                      <>
+                        <IconUpload className="size-6 mb-1" />
+                        <span className="text-xs font-medium">Tải ảnh</span>
+                      </>
+                    )}
+                  </div>
+                )}
+                
+                <div className="flex-1">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    ref={fileInputRef}
+                    onChange={handleImageUpload}
+                    disabled={uploadingImage}
+                  />
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Nên sử dụng ảnh vuông (tỷ lệ 1:1), định dạng PNG hoặc SVG có nền trong suốt. Dung lượng tối đa 2MB.
+                  </p>
+                  {!imageUrl && (
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      size="sm" 
+                      className="mt-3 rounded-full"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={uploadingImage}
+                    >
+                      Chọn file ảnh
+                    </Button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 

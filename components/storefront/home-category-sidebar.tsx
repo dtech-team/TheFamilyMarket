@@ -1,5 +1,6 @@
 import { getAllCategories } from "@/lib/services/category.service";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight, Tag } from "lucide-react";
 
 // Map category name → emoji icon (có thể mở rộng hoặc lưu DB sau)
@@ -34,11 +35,11 @@ export async function HomeCategorySidebar() {
   if (!categories || categories.length === 0) return null;
 
   return (
-    <aside className="hidden lg:block w-[220px] xl:w-[240px] shrink-0">
-      <div className="sticky top-[80px]">
-        <nav className="bg-card border border-border/60 rounded-2xl shadow-sm overflow-hidden">
+    <aside className="hidden lg:block w-[220px] xl:w-[240px] shrink-0 h-[450px]">
+      <div className="h-full">
+        <nav className="bg-card border border-border/60 rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
           {/* Header */}
-          <div className="px-4 py-3 bg-primary text-primary-foreground">
+          <div className="px-4 py-3 bg-primary text-primary-foreground shrink-0">
             <h3 className="text-sm font-bold flex items-center gap-2">
               <Tag className="size-4" />
               Danh mục sản phẩm
@@ -46,16 +47,22 @@ export async function HomeCategorySidebar() {
           </div>
 
           {/* Category List */}
-          <ul className="py-1">
+          <ul className="py-1 flex-1 overflow-y-auto hide-scrollbar">
             {categories.map((category, index) => (
               <li key={category.id}>
                 <Link
                   href={`/products?categories=${category.id}`}
                   className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-foreground/80 hover:bg-primary/5 hover:text-primary transition-colors group"
                 >
-                  <span className="text-base leading-none">
-                    {getCategoryIcon(category.name)}
-                  </span>
+                  {category.image_url ? (
+                    <div className="relative w-6 h-6 shrink-0 rounded-full overflow-hidden border border-border/50">
+                      <Image src={category.image_url} alt={category.name} fill className="object-cover" />
+                    </div>
+                  ) : (
+                    <span className="text-base leading-none w-6 h-6 flex items-center justify-center">
+                      {getCategoryIcon(category.name)}
+                    </span>
+                  )}
                   <span className="flex-1 truncate">{category.name}</span>
                   <ChevronRight className="size-3.5 text-muted-foreground/40 group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
                 </Link>
@@ -67,7 +74,7 @@ export async function HomeCategorySidebar() {
           </ul>
 
           {/* Footer link */}
-          <div className="px-4 py-3 border-t border-border/40">
+          <div className="px-4 py-3 border-t border-border/40 shrink-0">
             <Link
               href="/products"
               className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"

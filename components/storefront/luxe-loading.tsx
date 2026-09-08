@@ -28,15 +28,15 @@ export function LuxeLoading({
       {/* Glowing Pedestal / Cosmic Logo Container */}
       <div className="relative flex items-center justify-center p-4">
         {/* Pulsing Outer Cosmic Ring */}
-        <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-violet-400/10 via-purple-400/10 to-fuchsia-400/10 blur-xl animate-pulse duration-[2500ms]" />
+        <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-primary/10 via-accent/20 to-primary/10 blur-xl animate-pulse duration-[2500ms]" />
         
         {/* Spinning Gradient Border */}
-        {/* <div className="ab  solute inset-0 rounded-2xl bg-gradient-to-tr from-violet-500 via-purple-500 to-indigo-500 opacity-60 blur-sm -z-10" /> */}
+        {/* <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-primary via-accent to-secondary opacity-60 blur-sm -z-10" /> */}
 
         {/* Brand Logo & Shimmering Aura */}
-        <div className="relative bg-card/80 dark:bg-slate-950/80 backdrop-blur-md px-8 py-5 rounded-2xl border border-purple-500/30 shadow-[0_0_30px_rgba(168,85,247,0.25)] flex flex-col items-center gap-3.5 animate-luxe-float">
+        <div className="relative bg-card/80 dark:bg-slate-950/80 backdrop-blur-md px-8 py-5 rounded-2xl border border-primary/30 flex flex-col items-center gap-3.5 animate-luxe-float" style={{ boxShadow: "0 0 30px oklch(var(--primary) / 0.25)" }}>
           <div className="relative">
-            {/* <div className="absolute -inset-1.5 rounded-lg bg-gradient-to-r from-violet-600 via-purple-500 to-indigo-500 blur-lg opacity-70 animate-pulse" /> */}
+            {/* <div className="absolute -inset-1.5 rounded-lg bg-gradient-to-r from-primary via-accent to-primary blur-lg opacity-70 animate-pulse" /> */}
             <Image src="/icons/logo.png" alt={siteConfig.name} width={52} height={52} className="relative drop-shadow-md" />
           </div>
 
@@ -47,18 +47,18 @@ export function LuxeLoading({
 
       {/* Loading Text Label & Pulsing Dots */}
       <div className="flex flex-col items-center space-y-4 text-center">
-        <p className="text-sm font-semibold tracking-wide uppercase bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-600 dark:from-purple-300 dark:via-fuchsia-300 dark:to-purple-300 bg-clip-text text-transparent animate-pulse">
+        <p className="text-sm font-semibold tracking-wide uppercase bg-gradient-to-r from-primary via-accent-foreground to-primary dark:from-primary dark:via-accent-foreground dark:to-primary bg-clip-text text-transparent animate-pulse">
           {label}
         </p>
         
-        {/* Hiệu ứng xoay vòng kép ánh kim Luxe */}
+        {/* Hiệu ứng xoay vòng kép ánh kim Luxe (Theme Dependent) */}
         <div className="relative flex items-center justify-center w-16 h-16">
-          {/* Vòng xoay ngoài cùng chuyển màu violet -> fuchsia */}
-          <div className="absolute inset-0 rounded-full border-[3px] border-purple-500/20 border-t-purple-500 border-r-fuchsia-400 animate-spin shadow-[0_0_12px_rgba(168,85,247,0.35)]" />
+          {/* Vòng xoay ngoài cùng */}
+          <div className="absolute inset-0 rounded-full border-[3px] border-primary/20 border-t-primary border-r-secondary-foreground animate-spin" style={{ boxShadow: "0 0 12px oklch(var(--primary) / 0.35)" }} />
           {/* Vòng xoay ngược chiều phía trong */}
-          <div className="absolute inset-2 rounded-full border-[2.5px] border-violet-500/20 border-b-violet-400 border-l-indigo-400 animate-spin [animation-direction:reverse] [animation-duration:1.5s]" />
+          <div className="absolute inset-2 rounded-full border-[2.5px] border-secondary-foreground/20 border-b-secondary-foreground border-l-primary animate-spin [animation-direction:reverse] [animation-duration:1.5s]" />
           {/* Lõi ánh sáng nhấp nháy ở giữa */}
-          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-purple-400 to-fuchsia-300 shadow-[0_0_10px_rgba(216,180,254,0.9)] animate-pulse" />
+          <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-primary to-accent-foreground animate-pulse" style={{ boxShadow: "0 0 10px oklch(var(--primary) / 0.9)" }} />
         </div>
       </div>
     </div>

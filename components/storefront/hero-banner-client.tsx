@@ -33,7 +33,7 @@ export function HeroBannerClient({ initialBanners }: HeroBannerClientProps) {
   if (!currentBanner) return null;
 
   return (
-    <section className="relative w-full aspect-[2/1] md:aspect-[3/1]  rounded-2xl overflow-hidden bg-secondary select-none group shadow-sm border border-border/30">
+    <section className="relative w-full aspect-[2/1] md:aspect-[2.4/1]  rounded-2xl overflow-hidden bg-secondary select-none group shadow-sm border border-border/30">
       {/* Background Image Carousel */}
       <div className="absolute inset-0 z-0">
         {activeBanners.map((banner, idx) => (
@@ -100,10 +100,10 @@ export function HeroBannerClient({ initialBanners }: HeroBannerClientProps) {
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               aria-label={`Slide ${idx + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
+              className={`h-2 rounded-full transition-all duration-500 ${
                 idx === currentIndex
                   ? "w-8 bg-primary shadow-md"
-                  : "w-2.5 bg-white/50 hover:bg-white/80"
+                  : "w-2.5 bg-black/50 hover:bg-black/80 shadow-2xl"
               }`}
             />
           ))}
