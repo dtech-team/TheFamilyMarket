@@ -1,4 +1,4 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "jsr:@supabase/supabase-js@2";
 import { getGmailAccessToken, fetchUnreadMessageIds, fetchMessageDetail, markMessageAsRead } from "./gmail.service.ts";
 import { parseVcbEmail } from "./parser.service.ts";
 import { matchTransactionWithPayment } from "./matcher.service.ts";
