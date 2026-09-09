@@ -4,6 +4,14 @@ import { supabase } from "../supabase/client";
     async login(email: string, password: string) {
       return supabase.auth.signInWithPassword({ email, password });
     },
+    async loginWithGoogle() {
+      return supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: typeof window !== "undefined" ? `${window.location.origin}/auth/callback` : undefined,
+        },
+      });
+    },
     async logout() {
       return supabase.auth.signOut();
     },

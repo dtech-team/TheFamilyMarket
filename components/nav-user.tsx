@@ -70,7 +70,7 @@ export function NavUser({
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" asChild className="hover:bg-emerald-500/10 hover:text-emerald-600 transition-all duration-300 rounded-[16px] p-2 group">
-            <Link href="/login" className="gap-3">
+            <Link href="/" className="gap-3">
               <Avatar className="h-9 w-9 rounded-xl shadow-sm border border-border/50 group-hover:scale-105 transition-transform">
                 <AvatarFallback className="bg-emerald-100 dark:bg-emerald-950/50 rounded-xl">
                   <IconUserCircle className="text-emerald-600 dark:text-emerald-400 size-5" />
@@ -151,7 +151,7 @@ export function NavUser({
             <DropdownMenuSeparator className="opacity-50" />
             <DropdownMenuItem onClick={logout} className="text-red-600 dark:text-red-400 focus:text-red-600 focus:bg-red-500/10 hover:bg-red-500/10 cursor-pointer rounded-[12px] py-3 mt-1 font-bold transition-all flex items-center gap-2">
               <IconLogout className="size-5" />
-              Đăng xuất
+              Đăng xuất 
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

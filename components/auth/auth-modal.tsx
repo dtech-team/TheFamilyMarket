@@ -116,7 +116,7 @@ export function AuthModal() {
     try {
       const exists = await isEmailRegistered(email);
       if (exists) {
-        toast.error("Email này đã được đăng ký. Vui lòng đăng nhập.");
+        toast.error("Email này đã được đăng ký. Vui lòng đăng nhập lại.");
         setView("login");
         return;
       }
@@ -167,7 +167,7 @@ export function AuthModal() {
     setErrorMsg("");
     try {
       await completeRegister(fullName, password);
-      toast.success("Đăng ký hoàn tất! Chào mừng bạn.");
+      toast.success("Đăng ký hoàn tất! Chào mừng bạn đến với hệ thống.");
       closeModal();
       if (typeof window !== "undefined" && window.location.pathname === "/cart") {
         router.push("/checkout");
@@ -254,8 +254,8 @@ export function AuthModal() {
                 </div>
 
                 {errorMsg && (
-                  <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[13.5px] p-3 rounded-[12px] font-medium flex items-start gap-2">
-                    <span className="mt-0.5">⚠️</span>
+                  <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[13.5px] p-3 rounded-[12px] font-medium flex items-center gap-2">
+                    <span >⚠️</span>
                     <span>{errorMsg}</span>
                   </div>
                 )}
@@ -307,8 +307,8 @@ export function AuthModal() {
                     </div>
 
                     {errorMsg && (
-                      <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[13.5px] p-3 rounded-[12px] font-medium flex items-start gap-2">
-                        <span className="mt-0.5">⚠️</span>
+                      <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[13.5px] p-3 rounded-[12px] font-medium flex items-center gap-2">
+                        <span >⚠️</span>
                         <span>{errorMsg}</span>
                       </div>
                     )}
@@ -333,7 +333,7 @@ export function AuthModal() {
                       <Input
                         id="otp"
                         type="text"
-                        placeholder="••••••"
+                        placeholder="______"
                         maxLength={6}
                         required
                         value={otp}
@@ -343,8 +343,8 @@ export function AuthModal() {
                     </div>
 
                     {errorMsg && (
-                      <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[13.5px] p-3 rounded-[12px] font-medium flex items-start gap-2">
-                        <span className="mt-0.5">⚠️</span>
+                      <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[13.5px] p-3 rounded-[12px] font-medium flex items-center gap-2">
+                        <span >⚠️</span>
                         <span>{errorMsg}</span>
                       </div>
                     )}
@@ -402,8 +402,8 @@ export function AuthModal() {
                     </div>
 
                     {errorMsg && (
-                      <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[13.5px] p-3 rounded-[12px] font-medium flex items-start gap-2">
-                        <span className="mt-0.5">⚠️</span>
+                      <div className="bg-destructive/10 border border-destructive/20 text-destructive text-[13.5px] p-3 rounded-[12px] font-medium flex items-center gap-2">
+                        <span >⚠️</span>
                         <span>{errorMsg}</span>
                       </div>
                     )}
