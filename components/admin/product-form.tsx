@@ -419,7 +419,7 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
                 <Label htmlFor="product-name" className="text-sm font-semibold">Tên sản phẩm <span className="text-red-500">*</span></Label>
                 <Input
                   id="product-name"
-                  placeholder="VD: Tai nghe Bluetooth Sony..."
+                  placeholder="VD: Nồi chiên không dầu"
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   className="rounded-xl bg-background/50 border-border/50 focus-visible:ring-primary/30 h-11"
@@ -521,7 +521,7 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
                 <Label htmlFor="product-brand" className="text-sm font-semibold">Thương hiệu</Label>
                 <Input
                   id="product-brand"
-                  placeholder="VD: Apple, Nike..."
+                  placeholder="VD: Acecook, Nestle"
                   value={form.brand}
                   onChange={(e) => setForm((f) => ({ ...f, brand: e.target.value }))}
                   className="rounded-xl bg-background/50 border-border/50 focus-visible:ring-primary/30 h-11"
@@ -674,7 +674,7 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
                     <div key={i} className="flex gap-2 items-start bg-card/50 p-3 rounded-xl border border-border/50 shadow-sm transition-all hover:shadow-md">
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 flex-1">
                         <Input placeholder="Tên (VD: Màu Đỏ)" value={v.name} onChange={(e) => updateVariant(i, "name", e.target.value)} className="rounded-lg bg-background/50 h-10" />
-                        <Input placeholder="SKU" value={v.sku} onChange={(e) => updateVariant(i, "sku", e.target.value)} className="rounded-lg bg-background/50 h-10" />
+                        <Input placeholder="Mã biến thể (VD: R01)" value={v.sku} onChange={(e) => updateVariant(i, "sku", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                         <Input placeholder="Giá cộng thêm (VD: 50000)" type="number" value={v.price_modifier} onChange={(e) => updateVariant(i, "price_modifier", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                         <Input placeholder="Tồn kho" type="number" min="0" value={v.stock_quantity} onChange={(e) => updateVariant(i, "stock_quantity", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                       </div>
@@ -692,7 +692,7 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
             {/* Specifications Section */}
             <div className="space-y-4 border-t border-border/50 pt-6">
               <div className="flex items-center justify-between">
-                <Label className="text-base font-bold text-foreground">Thông số kỹ thuật</Label>
+                <Label className="text-base font-bold text-foreground">Thông số sản phẩm</Label>
                 <Button type="button" variant="outline" size="sm" onClick={addSpec} className="h-9 gap-1.5 rounded-full px-4 border-primary/20 text-primary hover:bg-primary/10">
                   <IconPlus className="size-4" /> Thêm thông số
                 </Button>
@@ -702,8 +702,8 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
                   {form.specs.map((s, i) => (
                     <div key={i} className="flex gap-2 items-start bg-card/50 p-3 rounded-xl border border-border/50 shadow-sm transition-all hover:shadow-md">
                       <div className="grid grid-cols-2 gap-3 flex-1">
-                        <Input placeholder="Tên thông số (VD: Chipset)" value={s.spec_name} onChange={(e) => updateSpec(i, "spec_name", e.target.value)} className="rounded-lg bg-background/50 h-10" />
-                        <Input placeholder="Giá trị (VD: Apple M3)" value={s.spec_value} onChange={(e) => updateSpec(i, "spec_value", e.target.value)} className="rounded-lg bg-background/50 h-10" />
+                        <Input placeholder="Tên thông số (VD: Nhà sản xuất)" value={s.spec_name} onChange={(e) => updateSpec(i, "spec_name", e.target.value)} className="rounded-lg bg-background/50 h-10" />
+                        <Input placeholder="Giá trị (VD: Acecook)" value={s.spec_value} onChange={(e) => updateSpec(i, "spec_value", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                       </div>
                       <Button type="button" variant="destructive" size="icon" className="shrink-0 rounded-lg shadow-sm" onClick={() => removeSpec(i)}>
                         <IconX className="size-4" />

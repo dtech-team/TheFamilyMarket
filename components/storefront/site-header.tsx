@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, ShoppingCart, Heart, Bell, User, Menu, LogOut, Package, HomeIcon, BoxIcon, UserIcon, LogOutIcon, Shield, MapPin, Settings, Sparkles, LayoutDashboard } from "lucide-react";
+import { Search, ShoppingCart, Heart, Bell, User, Menu, LogOut, Package, HomeIcon, BoxIcon, UserIcon, LogOutIcon, Shield, MapPin, Settings, Sparkles, LayoutDashboard, Phone, Truck, ChevronDown, Info, Handshake, Newspaper, PhoneOutgoing } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
 import { BrandLogo } from "@/components/ui/brand-logo";
@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { useAuthModal } from "@/lib/store/use-auth-modal";
 import { useCartStore } from "@/lib/store/use-cart-store";
 import { useAuth } from "@/components/providers/auth-provider";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { flushSync } from "react-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +21,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
+import { useTheme } from "next-themes";
 import { ThemeToggle } from "./theme-toggle";
 import { NotificationDropdown } from "@/components/notifications/notification-dropdown";
 import {
@@ -34,6 +37,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/lib/supabase/client";
 import { getProduct } from "@/lib/services/product.service";
 import { getGuestCartItems } from "@/lib/services/cart.service";
+import { getAllCategories } from "@/lib/services/category.service";
 
 
 export function SiteHeader() {
@@ -45,6 +49,52 @@ export function SiteHeader() {
   const router = useRouter();
   const pathname = usePathname();
   const initialLoadDone = useRef(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const themeClickPos = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleThemeSwitch = (checked: boolean) => {
+    const nextTheme = checked ? "dark" : "light";
+    if (!document.startViewTransition) {
+      setTheme(nextTheme);
+      return;
+    }
+    
+    const { x, y } = themeClickPos.current;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const transition = document.startViewTransition(() => {
+      flushSync(() => {
+        setTheme(nextTheme);
+      });
+    });
+
+    transition.ready.then(() => {
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`,
+      ];
+
+      document.documentElement.animate(
+        { clipPath },
+        {
+          duration: 500,
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      );
+    });
+  };
+
+  // Categories State
+  const [categories, setCategories] = useState<any[]>([]);
 
   // Search Suggestions State
   const [searchQuery, setSearchQuery] = useState("");
@@ -148,8 +198,35 @@ export function SiteHeader() {
       supabase.removeChannel(channel);
     };
   }, [user]);
+
+  // Fetch Categories for Dropdown
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await getAllCategories();
+      if (data) setCategories(data);
+    };
+    fetchCategories();
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 transition-all duration-300 shadow-lg ">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 transition-all duration-300 shadow-lg flex flex-col">
+      {/* Top Bar (Desktop Only) */}
+      <div className="hidden lg:block bg-primary text-primary-foreground py-1.5 text-[12.5px] font-medium border-b border-primary/10">
+        <div className="max-w-[1440px] mx-auto px-8 flex justify-between items-center">
+          <div className="flex items-center gap-6 opacity-90">
+            <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> Hotline: 1900 1234</span>
+            <span className="flex items-center gap-1.5"><Truck className="w-3.5 h-3.5" /> Giao hàng toàn quốc</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <Link href="/about" className="hover:text-primary-foreground/70 transition-colors">Giới thiệu</Link>
+            <Link href="/wholesale" className="hover:text-primary-foreground/70 transition-colors">Chính sách Đại lý</Link>
+            <Link href="/blog" className="hover:text-primary-foreground/70 transition-colors">Tin tức</Link>
+            <Link href="/contact" className="hover:text-primary-foreground/70 transition-colors">Liên hệ</Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Header */}
       <div className="grid grid-cols-[1fr_auto] md:flex md:flex-nowrap justify-between items-center w-full px-4 md:px-8 max-w-[1440px] mx-auto py-3 md:py-0 md:h-[80px] z-50 gap-y-3 md:gap-y-0">
         {/* Brand */}
         <div className="flex items-center gap-1.5 md:gap-4 order-1 min-w-0 pr-2">
@@ -305,6 +382,37 @@ export function SiteHeader() {
                     </SheetClose> */}
                   </div>
 
+                  {/* Thông tin mở rộng */}
+                  <div className="space-y-1 pt-2 border-t border-border/40">
+                    <p className="px-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground/80 mb-2 mt-2">
+                      Thông tin cửa hàng
+                    </p>
+                    <SheetClose asChild>
+                      <Link href="/about" className={cn("flex items-center gap-3 px-3.5 py-3 rounded-[14px] font-bold text-[14.5px] transition-all duration-200", pathname === "/about" ? "bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20" : "text-foreground/70 hover:bg-muted/50 hover:text-foreground")}>
+                        <Info className={cn("w-5 h-5", pathname === "/about" ? "text-primary" : "text-muted-foreground")} />
+                        Giới thiệu
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link href="/wholesale" className={cn("flex items-center gap-3 px-3.5 py-3 rounded-[14px] font-bold text-[14.5px] transition-all duration-200", pathname === "/wholesale" ? "bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20" : "text-foreground/70 hover:bg-muted/50 hover:text-foreground")}>
+                        <Handshake className={cn("w-5 h-5", pathname === "/wholesale" ? "text-primary" : "text-muted-foreground")} />
+                        Chính sách Đại lý
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link href="/blog" className={cn("flex items-center gap-3 px-3.5 py-3 rounded-[14px] font-bold text-[14.5px] transition-all duration-200", pathname?.startsWith("/blog") ? "bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20" : "text-foreground/70 hover:bg-muted/50 hover:text-foreground")}>
+                        <Newspaper className={cn("w-5 h-5", pathname?.startsWith("/blog") ? "text-primary" : "text-muted-foreground")} />
+                        Tin tức
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link href="/contact" className={cn("flex items-center gap-3 px-3.5 py-3 rounded-[14px] font-bold text-[14.5px] transition-all duration-200", pathname === "/contact" ? "bg-primary/10 text-primary shadow-sm ring-1 ring-primary/20" : "text-foreground/70 hover:bg-muted/50 hover:text-foreground")}>
+                        <PhoneOutgoing className={cn("w-5 h-5", pathname === "/contact" ? "text-primary" : "text-muted-foreground")} />
+                        Liên hệ
+                      </Link>
+                    </SheetClose>
+                  </div>
+
                   {/* Cá Nhân (Chỉ hiện khi đăng nhập — Customer) */}
                   {user && role !== "admin" && role !== "staff" && (
                     <div className="space-y-1 pt-2 border-t border-border/40">
@@ -374,6 +482,12 @@ export function SiteHeader() {
 
                 {/* 3. Chân Drawer */}
                 <div className="p-4 border-t border-border/50 bg-card/40 space-y-3 mt-auto">
+                  {/* Thông tin liên hệ nhanh (Chỉ hiện trên Mobile/Tablet) */}
+                  <div className="flex flex-col gap-2.5 px-3 py-2.5 bg-primary/5 rounded-xl border border-primary/10">
+                    <span className="flex items-center gap-2.5 text-[13.5px] font-bold text-primary"><Phone className="w-4 h-4" /> Hotline: 1900 1234</span>
+                    <span className="flex items-center gap-2.5 text-[13.5px] font-bold text-primary"><Truck className="w-4 h-4" /> Giao hàng toàn quốc</span>
+                  </div>
+
                   <div className="flex items-center justify-between px-3 py-2">
                     <span className="text-[13.5px] font-bold text-foreground/80">Giao diện (Sáng/Tối)</span>
                     <ThemeToggle />
@@ -402,25 +516,61 @@ export function SiteHeader() {
           </Link>
         </div>
 
-        {/* Search (Row 2 on Mobile, Center on Desktop) */}
-        <div ref={searchRef} className="col-span-2 md:col-span-1 flex w-full md:w-auto order-3 md:order-2 md:flex-1 md:max-w-[480px] lg:max-w-xl md:mx-8 relative group">
-          <form action="/products" method="GET" className="w-full relative flex items-center" onSubmit={() => addToHistory(searchQuery)}>
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4 transition-colors group-focus-within:text-primary" />
-            <input
-              name="search"
-              value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setShowSuggestions(true);
-              }}
-              onFocus={() => setShowSuggestions(true)}
-              className="w-full bg-muted/50 hover:bg-muted/80 focus:bg-background py-2.5 pl-11 pr-4 rounded-full border border-transparent focus:border-primary/30 focus:ring-4 focus:ring-primary/10 text-sm font-medium transition-all outline-none shadow-sm placeholder:text-muted-foreground/70"
-              placeholder="Tìm kiếm sản phẩm cao cấp..."
-              type="text"
-              required
-              autoComplete="off"
-            />
-          </form>
+        {/* Middle Section: Category + Search */}
+        <div className="col-span-2 md:col-span-1 flex w-full md:w-auto order-3 md:order-2 md:flex-1 md:max-w-[640px] lg:max-w-3xl md:mx-6 lg:mx-8 gap-3 items-center">
+          {/* Categories Button (Desktop) */}
+          <div className="relative group/nav z-[100] hidden md:block shrink-0">
+            <Button variant="outline" className="h-[42px] rounded-full font-bold px-4 flex items-center gap-2 border-border/60 bg-muted/40 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors text-foreground group-hover/nav:bg-primary group-hover/nav:text-primary-foreground">
+              <Menu className="w-4 h-4" />
+              Danh mục
+              <ChevronDown className="w-3.5 h-3.5 opacity-70 transition-transform duration-300 group-hover/nav:-rotate-180" />
+            </Button>
+
+            {/* Dropdown Content */}
+            <div className="absolute top-full left-0 pt-3 w-[260px] opacity-0 translate-y-2 invisible group-hover/nav:visible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 transition-all duration-300">
+              <div className="bg-card border border-border/50 rounded-2xl shadow-xl overflow-hidden p-2 grid grid-cols-1 gap-1 relative before:absolute before:-top-2 before:left-8 before:w-4 before:h-4 before:bg-card before:border-t before:border-l before:border-border/50 before:rotate-45 before:transform">
+                {categories.slice(0, 8).map((cat) => (
+                    <Link key={cat.id} href={`/products?categories=${cat.id}`} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/5 hover:text-primary transition-colors text-sm font-medium text-foreground/80 group/item relative z-10">
+                      {cat.image_url ? (
+                        <div className="w-7 h-7 rounded-full overflow-hidden border border-border/50 shrink-0 relative bg-background">
+                          <Image src={cat.image_url} alt={cat.name} fill className="object-cover" />
+                        </div>
+                      ) : (
+                        <span className="w-7 h-7 flex items-center justify-center shrink-0 bg-muted rounded-full text-xs">🛒</span>
+                      )}
+                      <span className="flex-1 truncate">{cat.name}</span>
+                    </Link>
+                ))}
+                {categories.length > 8 && (
+                  <div className="border-t border-border/40 mt-1 pt-1 relative z-10">
+                      <Link href="/products" className="flex justify-center items-center py-2 text-[13px] font-bold text-primary hover:underline">
+                        Xem tất cả {categories.length} danh mục
+                      </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Search Bar */}
+          <div ref={searchRef} className="relative group flex-1 w-full">
+            <form action="/products" method="GET" className="w-full relative flex items-center" onSubmit={() => addToHistory(searchQuery)}>
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4 transition-colors group-focus-within:text-primary" />
+              <input
+                name="search"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setShowSuggestions(true);
+                }}
+                onFocus={() => setShowSuggestions(true)}
+                className="w-full h-[42px] bg-muted/50 hover:bg-muted/80 focus:bg-background pl-11 pr-4 rounded-full border border-border/50 focus:border-primary/30 focus:ring-4 focus:ring-primary/10 text-sm font-medium transition-all outline-none shadow-sm placeholder:text-muted-foreground/70"
+                placeholder="Tìm kiếm sản phẩm cao cấp..."
+                type="text"
+                required
+                autoComplete="off"
+              />
+            </form>
 
           {/* Suggestions & History Dropdown */}
           {showSuggestions && (searchQuery.trim().length > 0 || searchHistory.length > 0) && (
@@ -497,8 +647,9 @@ export function SiteHeader() {
             </div>
           )}
         </div>
+      </div>
 
-        {/* Actions (Right) */}
+      {/* Actions (Right) */}
         <div className="flex items-center justify-end gap-1 flex-shrink-0 order-2 md:order-3">
           {/* Navigation Links (Desktop) */}
           <nav className="hidden lg:flex items-center gap-1 mr-3 bg-muted/40 p-1 rounded-full border border-border/40">
@@ -515,10 +666,6 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-1 md:gap-1.5 lg:border-l-2 lg:border-border/100 lg:pl-4 h-4">
-            <div className="mr-1 hidden md:block">
-              <ThemeToggle />
-            </div>
-
             {/* Yêu thích (Icon) */}
             <div className="hidden md:block">
               {user ? (
@@ -663,6 +810,27 @@ export function SiteHeader() {
                     </DropdownMenuItem>
                   </>
                 )}
+
+                <DropdownMenuSeparator className="bg-border/40 my-2" />
+
+                <div className="px-4 py-2 flex items-center justify-between w-full group">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-center mr-3 shrink-0">
+                      <Image unoptimized src="/icons/moon.png" alt="Theme" width={22} height={22} className="object-contain" />
+                      {/* <Image unoptimized src="/icons/sun.png" alt="Theme" width={22} height={22} className="hidden dark:block object-contain" /> */}
+                    </div>
+                    <span className="font-bold text-[13.5px]">Giao diện tối</span>
+                  </div>
+                  {mounted && (
+                    <Switch 
+                      checked={theme === 'dark'} 
+                      onPointerDown={(e) => {
+                        themeClickPos.current = { x: e.clientX, y: e.clientY };
+                      }}
+                      onCheckedChange={handleThemeSwitch} 
+                    />
+                  )}
+                </div>
 
                 <DropdownMenuSeparator className="bg-border/40 my-2" />
 
