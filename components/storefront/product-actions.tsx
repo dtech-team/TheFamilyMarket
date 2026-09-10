@@ -196,17 +196,17 @@ export function ProductActions({ productId, productName, productImage, productSl
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br from-amber-400/30 via-red-500/20 to-transparent  rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform duration-700 animate-pulse" />
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-gradient-to-br from-rose-500/20 via-orange-400/20 to-transparent rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform duration-700" />
 
-        <div className="relative z-10 rounded-[22px] bg-white dark:bg-black p-4 sm:p-6 backdrop-blur-xl space-y-4 overflow-hidden border border-white/60 dark:border-white/10">
+        <div className="relative z-10 rounded-[22px] bg-white dark:bg-black p-4 sm:p-5 backdrop-blur-xl space-y-4 overflow-hidden border border-white/60 dark:border-white/10">
           <div className="flex flex-col xl:flex-row items-center justify-between gap-3">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 sm:gap-3 ">
               <span className={cn(
-                "text-3xl sm:text-4xl xl:text-5xl font-black bg-clip-text text-transparent tracking-tight leading-none drop-shadow-sm",
+                "text-2xl sm:text-3xl xl:text-4xl font-black bg-clip-text text-transparent tracking-tight leading-none drop-shadow-sm",
                 isOutOfStock ? "bg-gradient-to-r from-muted-foreground to-muted-foreground/60" : "bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 dark:from-red-400 dark:via-rose-400 dark:to-amber-400"
               )}>
                 {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(finalPrice)}
               </span>
               {!isOutOfStock && hasDiscount && (
-                <span className="text-base sm:text-lg xl:text-xl text-muted-foreground/80 line-through decoration-red-500/70 font-semibold tracking-normal">
+                <span className="text-sm sm:text-base xl:text-lg text-muted-foreground/80 line-through decoration-red-500/70 font-semibold tracking-normal">
                   {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(finalOriginalPrice)}
                 </span>
               )}
@@ -303,7 +303,7 @@ export function ProductActions({ productId, productName, productImage, productSl
         <button
           onClick={handleAddToCart}
           disabled={isOutOfStock || isAdding}
-          className="flex-1 flex justify-center items-center h-14 px-5 py-3 bg-primary text-primary-foreground font-bold text-sm sm:text-base rounded-[16px] shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed whitespace-nowrap"
+          className="flex-1 flex justify-center items-center h-12 sm:h-13 px-4 py-2 bg-primary text-primary-foreground font-bold text-sm sm:text-base rounded-[16px] shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed whitespace-nowrap"
         >
           {isOutOfStock ? (
             <span>Sản phẩm hiện đang tạm hết hàng</span>
@@ -318,7 +318,7 @@ export function ProductActions({ productId, productName, productImage, productSl
           <button
             onClick={handleBuyNow}
             disabled={isAdding}
-            className="flex-1 min-w-[130px] flex justify-center items-center h-14 px-5 py-3 bg-card/80 backdrop-blur-md border-2 border-primary/20 text-primary font-bold text-sm sm:text-base rounded-[16px] hover:bg-primary/5 hover:border-primary/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
+            className="flex-1 min-w-[130px] flex justify-center items-center h-12 sm:h-13 px-4 py-2 bg-card/80 backdrop-blur-md border-2 border-primary/20 text-primary font-bold text-sm sm:text-base rounded-[16px] hover:bg-primary/5 hover:border-primary/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
           >
             <span>{isAdding ? "Đang xử lý..." : "Mua ngay"}</span>
           </button>
@@ -326,7 +326,7 @@ export function ProductActions({ productId, productName, productImage, productSl
         <button
           onClick={handleToggleWishlist}
           disabled={isTogglingHeart}
-          className="flex justify-center items-center h-14 w-14 bg-card/80 backdrop-blur-md border border-border/50 text-muted-foreground rounded-[16px] hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-500 hover:border-red-200 transition-all duration-300 shrink-0"
+          className="flex justify-center items-center h-12 sm:h-13 w-12 sm:w-13 bg-card/80 backdrop-blur-md border border-border/50 text-muted-foreground rounded-[16px] hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-500 hover:border-red-200 transition-all duration-300 shrink-0"
         >
           <Heart className={cn("w-5 h-5 transition-colors shrink-0", isWishlisted && "fill-red-500 text-red-500")} />
         </button>

@@ -36,7 +36,7 @@ export default async function ProductDetailsPage({
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       {/* Product Overview */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+      <section className="grid grid-cols-1 md:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8">
         {/* Left: Gallery */}
         <div className="w-full">
           <ProductGallery images={images} productName={product.name} discountPercent={product.discount_percent} />
@@ -44,7 +44,7 @@ export default async function ProductDetailsPage({
 
         {/* Right: Product Info & Actions */}
         <div className="flex flex-col">
-          <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-[32px] p-6 sm:p-8 lg:p-10 shadow-sm flex flex-col space-y-6 lg:space-y-8 relative overflow-hidden">
+          <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-[32px] p-5 sm:p-6 lg:p-8 shadow-sm flex flex-col space-y-5 lg:space-y-6 relative overflow-hidden">
             {/* Subtle background glow */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -70,7 +70,7 @@ export default async function ProductDetailsPage({
                 </span>
               </div>
               
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground tracking-tight leading-[1.1]">{product.name}</h1>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground tracking-tight leading-[1.1]">{product.name}</h1>
             </div>
 
             {product.description && (

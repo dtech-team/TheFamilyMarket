@@ -14,7 +14,7 @@ export async function getProduct(
 ) {
   let query = supabase
     .from("products")
-    .select("*, categories(name)", { count: "exact" });
+    .select("*, categories(name), product_variants(name)", { count: "exact" });
 
   if (search) {
     query = query.ilike("name", `%${search}%`);
@@ -80,7 +80,7 @@ export async function getDistinctBrands() {
 export async function getProductBySlug(slug: string) {
   const { data, error } = await supabase
     .from("products")
-    .select("*, categories(name)")
+    .select("*, categories(name), product_variants(name)")
     .eq("slug", slug)
     .single();
 
@@ -139,7 +139,7 @@ export async function getRelatedProducts(categoryId: string | null, excludeProdu
   if (!categoryId) return { data: [], error: null };
   const { data, error } = await supabase
     .from("products")
-    .select("*, categories(name)")
+    .select("*, categories(name), product_variants(name)")
     .eq("category_id", categoryId)
     .neq("id", excludeProductId)
     .limit(limit);
@@ -150,7 +150,7 @@ export async function getRelatedProducts(categoryId: string | null, excludeProdu
 export async function getFlashSaleProducts(limit: number = 4) {
   const { data, error } = await supabase
     .from("products")
-    .select("*, categories(name)")
+    .select("*, categories(name), product_variants(name)")
     .gt("discount_percent", 0)
     .order("discount_percent", { ascending: false })
     .limit(limit);
@@ -161,7 +161,7 @@ export async function getFlashSaleProducts(limit: number = 4) {
 export async function getNewArrivals(limit: number = 8) {
   const { data, error } = await supabase
     .from("products")
-    .select("*, categories(name)")
+    .select("*, categories(name), product_variants(name)")
     .order("created_at", { ascending: false })
     .limit(limit);
 

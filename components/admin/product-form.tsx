@@ -294,7 +294,7 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
     });
   };
 
-  const addVariant = () => setForm(f => ({ ...f, variants: [...f.variants, { name: "", sku: "", price_modifier: "0", stock_quantity: "0" }] }));
+  const addVariant = () => setForm(f => ({ ...f, variants: [...f.variants, { name: "", sku: "", price_modifier: "", stock_quantity: "" }] }));
   const updateVariant = (index: number, field: keyof VariantState, value: string) => setForm(f => {
     const newVariants = [...f.variants];
     newVariants[index] = { ...newVariants[index], [field]: value };
@@ -675,7 +675,7 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 flex-1">
                         <Input placeholder="Tên (VD: Màu Đỏ)" value={v.name} onChange={(e) => updateVariant(i, "name", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                         <Input placeholder="Mã biến thể (VD: R01)" value={v.sku} onChange={(e) => updateVariant(i, "sku", e.target.value)} className="rounded-lg bg-background/50 h-10" />
-                        <Input placeholder="Giá cộng thêm (VD: 50000)" type="number" value={v.price_modifier} onChange={(e) => updateVariant(i, "price_modifier", e.target.value)} className="rounded-lg bg-background/50 h-10" />
+                        <Input placeholder="Giá cộng thêm" type="number" value={v.price_modifier} onChange={(e) => updateVariant(i, "price_modifier", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                         <Input placeholder="Tồn kho" type="number" min="0" value={v.stock_quantity} onChange={(e) => updateVariant(i, "stock_quantity", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                       </div>
                       <Button type="button" variant="destructive" size="icon" className="shrink-0 rounded-lg shadow-sm" onClick={() => removeVariant(i)}>
