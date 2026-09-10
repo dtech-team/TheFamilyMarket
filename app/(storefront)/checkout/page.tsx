@@ -389,7 +389,7 @@ export default function CheckoutPage() {
                   Thanh toán khi nhận hàng (COD)
                 </Label>
               </div>
-              <div
+              {/* <div
                 className={`relative flex items-center space-x-3 border-2 p-4 rounded-[16px] transition-all duration-200 ${formData.paymentMethod === 'banking' ? 'border-primary bg-primary/5 shadow-sm' : 'border-border/50 hover:bg-muted/50 hover:border-border'}`}
               >
                 <RadioGroupItem value="banking" id="banking" className="mt-0.5 relative z-10" />
@@ -397,7 +397,7 @@ export default function CheckoutPage() {
                   <span>Chuyển khoản ngân hàng</span>
                   <span className="text-[11px] bg-primary/10 text-primary px-2.5 py-1 rounded-full font-bold shadow-sm w-fit relative z-10">Quét QR tự động</span>
                 </Label>
-              </div>
+              </div> */}
             </RadioGroup>
           </div>
         </div>

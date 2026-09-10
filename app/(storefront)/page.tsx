@@ -1,6 +1,7 @@
 import { HeroBanner } from "@/components/storefront/hero-banner";
 import { FlashSale } from "@/components/storefront/flash-sale";
 import { NewArrivals } from "@/components/storefront/new-arrivals";
+import { BestSellers } from "@/components/storefront/best-sellers";
 import { HomeCategorySidebar } from "@/components/storefront/home-category-sidebar";
 
 import { MobileCategoryScroll } from "@/components/storefront/mobile-category-scroll";
@@ -25,6 +26,7 @@ export default function StorefrontHomePage() {
       {/* Below rows */}
       <div className="space-y-8">
         <FlashSale />
+        <BestSellers />
         <NewArrivals />
       </div>
     </div>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Percent, ShoppingBag, ShoppingCart, User } from "lucide-react";
+import { Home, Heart, ShoppingBag, ShoppingCart, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthModal } from "@/lib/store/use-auth-modal";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -15,10 +15,11 @@ const navItems = [
     matchExact: true,
   },
   {
-    label: "Khuyến mãi",
-    href: "/products?sort=discount_desc",
-    icon: Percent,
+    label: "Yêu thích",
+    href: "/account/wishlist",
+    icon: Heart,
     matchExact: false,
+    requireAuth: true,
   },
   {
     label: "Sản phẩm",
@@ -60,8 +61,8 @@ export function MobileBottomNav() {
   }, null as typeof navItems[0] | null);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-background/95 backdrop-blur-xl border-t border-border/60 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] safe-area-bottom">
-      <div className="flex items-stretch justify-around max-w-lg mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-background/70 backdrop-blur-xl border-t border-border/60 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] safe-area-bottom">
+      <div className="flex items-stretch justify-between w-full max-w-md sm:max-w-2xl md:max-w-3xl mx-auto">
         {navItems.map((item) => {
           const active = activeItem?.href === item.href;
           const Icon = item.icon;
@@ -82,7 +83,7 @@ export function MobileBottomNav() {
                 "flex flex-col items-center justify-center gap-0.5 py-2 px-3 min-w-[64px] transition-colors relative",
                 active
                   ? "text-primary bg-primary/10"
-                  : "text-muted-foreground"
+                  : "text-black "
               )}
             >
               {/* Active indicator line */}
@@ -92,13 +93,13 @@ export function MobileBottomNav() {
               <Icon
                 className={cn(
                   "size-5 transition-all",
-                  active ? "stroke-[2.5]" : "stroke-[1.5]"
+                  active ? "stroke-[3]" : "stroke-[2]"
                 )}
               />
               <span
                 className={cn(
                   "text-[10px] leading-tight",
-                  active ? "font-bold" : "font-medium"
+                  active ? "font-black" : "font-bold"
                 )}
               >
                 {item.label}

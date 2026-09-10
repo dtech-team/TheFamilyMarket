@@ -168,6 +168,16 @@ export async function getNewArrivals(limit: number = 8) {
   return { data, error };
 }
 
+export async function getBestSellers(limit: number = 8) {
+  const { data, error } = await supabase
+    .from("products")
+    .select("*, categories(name), product_variants(name)")
+    .order("sold_count", { ascending: false, nullsFirst: false })
+    .limit(limit);
+
+  return { data, error };
+}
+
 export async function createProduct(payload: { 
   name: string; 
   price: number; 

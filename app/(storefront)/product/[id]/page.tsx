@@ -36,9 +36,9 @@ export default async function ProductDetailsPage({
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       {/* Product Overview */}
-      <section className="grid grid-cols-1 md:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8">
+      <section className="grid grid-cols-1 md:grid-cols-[1fr_1.1fr] gap-6 lg:gap-8 items-start">
         {/* Left: Gallery */}
-        <div className="w-full">
+        <div className="w-full sticky top-24">
           <ProductGallery images={images} productName={product.name} discountPercent={product.discount_percent} />
         </div>
 

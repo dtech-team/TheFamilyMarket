@@ -61,7 +61,7 @@ export function ProductTabs({ productId, description, specs, reviews, productNam
           onClick={() => setActiveTab("specs")}
         >
           <span className="sm:hidden">Thông số</span>
-          <span className="hidden sm:inline">Thông số kỹ thuật</span>
+          <span className="hidden sm:inline">Thông số </span>
         </button>
         <button
           className={cn(

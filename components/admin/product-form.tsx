@@ -629,9 +629,9 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
               {/* Gallery Images Upload */}
               <div className="space-y-2">
                 <Label className="text-sm font-semibold">Thư viện ảnh</Label>
-                <div className="grid grid-cols-3 gap-3 h-48 overflow-y-auto pr-2 hide-scrollbar">
+                <div className="flex flex-wrap gap-3 max-h-[300px] overflow-y-auto pb-2 pr-2 custom-scrollbar">
                   {form.galleryImages.map((img, idx) => (
-                    <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-border/50 group shadow-sm">
+                    <div key={idx} className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden border border-border/50 group shadow-sm shrink-0 bg-card">
                       <Image fill unoptimized src={img.url} className="object-cover" alt={`Gallery ${idx}`} />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
                       <Button
@@ -645,7 +645,7 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
                       </Button>
                     </div>
                   ))}
-                  <label className="border-border hover:border-primary hover:bg-primary/5 flex aspect-square cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed transition-all bg-background/50 group">
+                  <label className="border-border hover:border-primary hover:bg-primary/5 flex w-24 h-24 sm:w-28 sm:h-28 shrink-0 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed transition-all bg-background/50 group">
                     <IconPlus className="text-muted-foreground group-hover:text-primary size-6 mb-1 transition-colors group-hover:scale-110" />
                     <span className="text-[10px] font-bold text-muted-foreground group-hover:text-primary uppercase tracking-wider transition-colors">Thêm ảnh</span>
                     <input

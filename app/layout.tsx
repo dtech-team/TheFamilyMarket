@@ -35,7 +35,7 @@ export default function RootLayout({
       </head>
       <body className={prompt.className}>
         <NextTopLoader
-          color="#ff00ffff"
+          color="#01fff2ff"
           initialPosition={0.7}
           crawlSpeed={200}
           height={4}
