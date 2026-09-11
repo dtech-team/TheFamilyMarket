@@ -45,10 +45,16 @@ export function ProductsFilter({ categories, brands }: ProductsFilterProps) {
   const [maxPriceInput, setMaxPriceInput] = useState<string>("");
 
   // Read current filters from URL
-  const currentCategories = searchParams.getAll("categories");
-  const currentBrands = searchParams.getAll("brands");
+  const [localCategories, setLocalCategories] = useState<string[]>(searchParams.getAll("categories"));
+  const [localBrands, setLocalBrands] = useState<string[]>(searchParams.getAll("brands"));
+
   const minPrice = searchParams.get("minPrice") || "";
   const maxPrice = searchParams.get("maxPrice") || "";
+
+  useEffect(() => {
+    setLocalCategories(searchParams.getAll("categories"));
+    setLocalBrands(searchParams.getAll("brands"));
+  }, [searchParams]);
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -85,13 +91,23 @@ export function ProductsFilter({ categories, brands }: ProductsFilterProps) {
   );
 
   const toggleCategory = (id: string) => {
-    const action = currentCategories.includes(id) ? "remove" : "add";
-    router.push(pathname + "?" + createQueryString("categories", id, action));
+    const action = localCategories.includes(id) ? "remove" : "add";
+    if (action === "add") {
+      setLocalCategories((prev) => [...prev, id]);
+    } else {
+      setLocalCategories((prev) => prev.filter((c) => c !== id));
+    }
+    router.push(pathname + "?" + createQueryString("categories", id, action), { scroll: false });
   };
 
   const toggleBrand = (brand: string) => {
-    const action = currentBrands.includes(brand) ? "remove" : "add";
-    router.push(pathname + "?" + createQueryString("brands", brand, action));
+    const action = localBrands.includes(brand) ? "remove" : "add";
+    if (action === "add") {
+      setLocalBrands((prev) => [...prev, brand]);
+    } else {
+      setLocalBrands((prev) => prev.filter((b) => b !== brand));
+    }
+    router.push(pathname + "?" + createQueryString("brands", brand, action), { scroll: false });
   };
 
   const applyPriceInputs = () => {
@@ -131,7 +147,7 @@ export function ProductsFilter({ categories, brands }: ProductsFilterProps) {
                 <li key={category.id}>
                   <label className="flex items-center gap-3 cursor-pointer group">
                     <Checkbox
-                      checked={currentCategories.includes(category.id)}
+                      checked={localCategories.includes(category.id)}
                       onCheckedChange={() => toggleCategory(category.id)}
                       className="border-muted-foreground/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary transition-all"
                     />
@@ -154,7 +170,7 @@ export function ProductsFilter({ categories, brands }: ProductsFilterProps) {
           <AccordionContent className="pt-2 pb-4">
             <div className="flex flex-wrap gap-2">
               {brands.map((brand) => {
-                const isSelected = currentBrands.includes(brand);
+                const isSelected = localBrands.includes(brand);
                 return (
                   <button
                     key={brand}
