@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, ShoppingCart, Heart, Bell, User, Menu, LogOut, Package, HomeIcon, BoxIcon, UserIcon, LogOutIcon, Shield, MapPin, Settings, Sparkles, LayoutDashboard, Phone, Truck, ChevronDown, Info, Handshake, Newspaper, PhoneOutgoing } from "lucide-react";
+import { Search, ShoppingCart, Heart, Bell, User, Menu, LogOut, Package, HomeIcon, BoxIcon, UserIcon, LogOutIcon, Shield, MapPin, Settings, Sparkles, LayoutDashboard, Phone, Truck, ChevronDown, Info, Handshake, Newspaper, PhoneOutgoing, Sun, Moon, Monitor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
 import { BrandLogo } from "@/components/ui/brand-logo";
@@ -488,9 +488,34 @@ export function SiteHeader() {
                     <span className="flex items-center gap-2.5 text-[13.5px] font-bold text-primary"><Truck className="w-4 h-4" /> Giao hàng toàn quốc</span>
                   </div>
 
-                  <div className="flex items-center justify-between px-3 py-2">
-                    <span className="text-[13.5px] font-bold text-foreground/80">Giao diện (Sáng/Tối)</span>
-                    <ThemeToggle />
+                  <div className="flex flex-col gap-2 px-3 py-2 w-full mt-2">
+                    <div className="flex  items-center gap-2 ">
+                      <Image unoptimized src="/icons/color-mode.png" alt="Logo" width={25} height={25} />
+                      <span className="text-[13.5px] font-bold text-foreground/80">Giao diện hiển thị</span>
+                    </div>
+                    <div className="flex gap-1 bg-muted/50 p-1 rounded-xl w-full border border-border/50">
+                      <button
+                        onClick={(e) => { e.preventDefault(); setTheme('light'); }}
+                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'light' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                      >
+                        <Sun className="w-4 h-4" />
+                        <span className="text-[11px] font-semibold">Sáng</span>
+                      </button>
+                      <button
+                        onClick={(e) => { e.preventDefault(); setTheme('dark'); }}
+                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'dark' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                      >
+                        <Moon className="w-4 h-4" />
+                        <span className="text-[11px] font-semibold">Tối</span>
+                      </button>
+                      <button
+                        onClick={(e) => { e.preventDefault(); setTheme('system'); }}
+                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'system' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                      >
+                        <Monitor className="w-4 h-4" />
+                        <span className="text-[11px] font-semibold">Hệ thống</span>
+                      </button>
+                    </div>
                   </div>
                   {user && (
                     <SheetClose asChild>
@@ -813,23 +838,34 @@ export function SiteHeader() {
 
                 <DropdownMenuSeparator className="bg-border/40 my-2" />
 
-                <div className="px-4 py-2 flex items-center justify-between w-full group">
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center justify-center mr-3 shrink-0">
-                      <Image unoptimized src="/icons/moon.png" alt="Theme" width={22} height={22} className="object-contain" />
-                      {/* <Image unoptimized src="/icons/sun.png" alt="Theme" width={22} height={22} className="hidden dark:block object-contain" /> */}
+                <div className="px-4 py-2 flex flex-col gap-2 w-full">
+                   <div className="flex  items-center gap-4 ">
+                      <Image unoptimized src="/icons/color-mode.png" alt="Logo" width={25} height={25} />
+                      <span className="text-[13.5px] font-bold text-foreground/80">Giao diện hiển thị</span>
                     </div>
-                    <span className="font-bold text-[13.5px]">Giao diện tối</span>
+                  <div className="flex gap-1 bg-muted/50 p-1 rounded-xl w-full border border-border/50">
+                    <button
+                      onClick={(e) => { e.preventDefault(); setTheme('light'); }}
+                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'light' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                    >
+                      <Sun className="w-4 h-4" />
+                      <span className="text-[11px] font-semibold">Sáng</span>
+                    </button>
+                    <button
+                      onClick={(e) => { e.preventDefault(); setTheme('dark'); }}
+                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'dark' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                    >
+                      <Moon className="w-4 h-4" />
+                      <span className="text-[11px] font-semibold">Tối</span>
+                    </button>
+                    <button
+                      onClick={(e) => { e.preventDefault(); setTheme('system'); }}
+                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'system' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                    >
+                      <Monitor className="w-4 h-4" />
+                      <span className="text-[11px] font-semibold">Hệ thống</span>
+                    </button>
                   </div>
-                  {mounted && (
-                    <Switch
-                      checked={theme === 'dark'}
-                      onPointerDown={(e) => {
-                        themeClickPos.current = { x: e.clientX, y: e.clientY };
-                      }}
-                      onCheckedChange={handleThemeSwitch}
-                    />
-                  )}
                 </div>
 
                 <DropdownMenuSeparator className="bg-border/40 my-2" />
