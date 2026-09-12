@@ -175,6 +175,7 @@ export async function getBestSellers(limit: number = 8) {
     .from("products")
     .select("*, categories(name), product_variants(name)")
     .order("sold_count", { ascending: false, nullsFirst: false })
+    .order("created_at", { ascending: false })
     .limit(limit);
 
   return { data, error };
