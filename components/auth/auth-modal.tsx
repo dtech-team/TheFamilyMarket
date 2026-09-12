@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { IconLoader2 } from "@tabler/icons-react";
@@ -33,6 +34,15 @@ export function AuthModal() {
   const [regStep, setRegStep] = useState<"email" | "otp" | "password">("email");
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showRegPassword, setShowRegPassword] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (regStep === "otp" && countdown > 0) {
+      timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [regStep, countdown]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -124,9 +134,27 @@ export function AuthModal() {
       if (error) throw error;
       toast.success("Mã xác thực đã được gửi đến email của bạn!");
       setRegStep("otp");
+      setCountdown(60);
     } catch (err: any) {
       toast.error(err.message || "Lỗi gửi mã OTP");
       setErrorMsg(err.message || "Lỗi gửi mã OTP");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (countdown > 0) return;
+    setLoading(true);
+    setErrorMsg("");
+    try {
+      const { error } = await sendOtp(email);
+      if (error) throw error;
+      toast.success("Mã xác thực mới đã được gửi!");
+      setCountdown(60);
+    } catch (err: any) {
+      toast.error(err.message || "Lỗi gửi lại mã OTP");
+      setErrorMsg(err.message || "Lỗi gửi lại mã OTP");
     } finally {
       setLoading(false);
     }
@@ -167,7 +195,7 @@ export function AuthModal() {
     setErrorMsg("");
     try {
       await completeRegister(fullName, password);
-      toast.success("Đăng ký hoàn tất! Chào mừng bạn đến với hệ thống.");
+      toast.success("Đăng ký hoàn tất! Chào mừng bạn đến với hệ thống của chúng tôi.");
       closeModal();
       if (typeof window !== "undefined" && window.location.pathname === "/cart") {
         router.push("/checkout");
@@ -190,6 +218,8 @@ export function AuthModal() {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
       <DialogContent className="sm:max-w-[460px] p-0 overflow-hidden bg-white dark:bg-card/95 border border-border/50 shadow-2xl shadow-primary/20 rounded-[32px]  backdrop-blur-xl animate__animated animate__bounceIn">
+        <DialogTitle className="sr-only">Xác thực tài khoản</DialogTitle>
+        <DialogDescription className="sr-only">Đăng nhập hoặc đăng ký để tiếp tục</DialogDescription>
         <div className="flex flex-col relative">
           {/* Decorative background glow */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10 translate-x-10 -translate-y-10" />
@@ -354,9 +384,20 @@ export function AuthModal() {
                       Xác nhận mã
                     </Button>
 
-                    <div className="text-center mt-2">
+                    <div className="flex items-center justify-between mt-2 pt-4 border-t border-border/50">
                       <button type="button" className="text-[14px] text-muted-foreground font-medium hover:text-foreground transition-colors" onClick={() => setRegStep("email")} disabled={loading}>
                         ← Nhập email khác
+                      </button>
+                      <button 
+                        type="button" 
+                        onClick={handleResendOtp}
+                        disabled={loading || countdown > 0}
+                        className={cn(
+                          "text-[14px] font-medium transition-colors",
+                          countdown > 0 ? "text-muted-foreground cursor-not-allowed" : "text-primary hover:text-primary/80"
+                        )}
+                      >
+                        {countdown > 0 ? `Gửi lại sau ${countdown}s` : "Gửi lại mã OTP"}
                       </button>
                     </div>
                   </form>

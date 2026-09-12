@@ -41,6 +41,8 @@ export async function getProduct(
     query = query.order("price", { ascending: true });
   } else if (options?.sort === 'price_desc') {
     query = query.order("price", { ascending: false });
+  } else if (options?.sort === 'sales_desc') {
+    query = query.order("sold_count", { ascending: false });
   } else {
     // default: newest
     query = query.order("created_at", { ascending: false });
@@ -173,6 +175,7 @@ export async function getBestSellers(limit: number = 8) {
     .from("products")
     .select("*, categories(name), product_variants(name)")
     .order("sold_count", { ascending: false, nullsFirst: false })
+    .order("created_at", { ascending: false })
     .limit(limit);
 
   return { data, error };

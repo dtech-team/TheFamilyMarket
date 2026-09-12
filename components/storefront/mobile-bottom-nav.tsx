@@ -83,7 +83,7 @@ export function MobileBottomNav() {
                 "flex flex-col items-center justify-center gap-0.5 py-2 px-3 min-w-[64px] transition-colors relative",
                 active
                   ? "text-primary bg-primary/10"
-                  : "text-black "
+                  : "text-black dark:text-white hover:text-foreground"
               )}
             >
               {/* Active indicator line */}

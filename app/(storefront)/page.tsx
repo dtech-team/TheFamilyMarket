@@ -26,8 +26,8 @@ export default function StorefrontHomePage() {
       {/* Below rows */}
       <div className="space-y-8">
         <FlashSale />
-        <BestSellers />
         <NewArrivals />
+        <BestSellers />
       </div>
     </div>
   );

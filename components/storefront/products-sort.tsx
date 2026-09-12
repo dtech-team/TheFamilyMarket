@@ -145,7 +145,10 @@ export function ProductsSort({ categories }: ProductsSortProps) {
           </SelectTrigger>
           <SelectContent className="rounded-xl border-border/50 shadow-lg">
             <SelectItem value="default" className="rounded-lg cursor-pointer">
-              Mặc định
+              Mới nhất
+            </SelectItem>
+            <SelectItem value="sales_desc" className="rounded-lg cursor-pointer">
+              Bán chạy nhất
             </SelectItem>
             <SelectItem value="price_asc" className="rounded-lg cursor-pointer">
               Giá: Từ thấp đến cao

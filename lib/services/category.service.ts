@@ -35,7 +35,7 @@ export async function getAllCategories() {
   const { data, error } = await supabase
     .from("categories")
     .select("*")
-    .order("name", { ascending: true });
+    .order("created_at", { ascending: false });
 
   return { data, error };
 }
