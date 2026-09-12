@@ -526,7 +526,7 @@ export function SiteHeader() {
               <ChevronDown className="w-3.5 h-3.5 opacity-70 transition-transform duration-300 group-hover/nav:-rotate-180" />
             </Button>
 
-            {/* Dropdown Content */}
+            {/* Dropdown Categories */}
             <div className="absolute top-full left-0 pt-3 w-[260px] opacity-0 translate-y-2 invisible group-hover/nav:visible group-hover/nav:opacity-100 group-hover/nav:translate-y-0 transition-all duration-300">
               <div className="bg-card border border-border/50 rounded-2xl shadow-xl p-2 relative before:absolute before:-top-2 before:left-8 before:w-4 before:h-4 before:bg-card before:border-t before:border-l before:border-border/50 before:rotate-45 before:transform">
                 <div className="grid grid-cols-1 gap-1 max-h-[360px] overflow-y-auto relative z-10 pr-1 hide-scrollbar">
@@ -534,7 +534,7 @@ export function SiteHeader() {
                       <Link key={cat.id} href={`/products?categories=${cat.id}`} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/5 hover:text-primary transition-colors text-sm font-medium text-foreground/80 group/item">
                         {cat.image_url ? (
                           <div className="w-7 h-7 rounded-full overflow-hidden border border-border/50 shrink-0 relative bg-background">
-                            <Image src={cat.image_url} alt={cat.name} fill sizes="28px" className="object-cover" />
+                            <Image src={cat.image_url} alt={cat.name} fill sizes="26px" className="object-cover" />
                           </div>
                         ) : (
                           <span className="w-7 h-7 flex items-center justify-center shrink-0 bg-muted rounded-full text-xs">🛒</span>

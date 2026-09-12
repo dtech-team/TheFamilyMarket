@@ -116,36 +116,9 @@ export function ProductCard({ product, rank, isNew }: ProductCardProps) {
           </div>
         )}
 
-        {/* Price & Stock Section */}
-        <div className="mt-auto pt-2 flex items-center justify-between gap-2 flex-wrap">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className={cn(
-              "font-extrabold text-lg sm:text-xl leading-none",
-              isOutOfStock ? "text-muted-foreground" : "text-red-600"
-            )}>
-              {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(salePrice)}
-            </span>
-            {hasDiscount && (
-              <span className="text-muted-foreground line-through text-[11px] sm:text-xs font-semibold leading-none mt-0.5">
-                {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(originalPrice)}
-              </span>
-            )}
-          </div>
-          
-          {sold === 0 && (
-            <div className="text-[10px] sm:text-[11px] font-semibold text-muted-foreground">
-              {isOutOfStock ? (
-                <span className="text-white bg-red-600 shadow-sm px-2 py-0.5 rounded-full font-bold">Hết hàng</span>
-              ) : (
-                <span>Còn {stock}</span>
-              )}
-            </div>
-          )}
-        </div>
-
         {/* Sold / Stock Progress Bar */}
         {sold > 0 && (
-          <div className="mt-2 w-full">
+          <div className="w-full mt-auto pt-2">
             <div className="flex justify-between items-center text-[10px] sm:text-[11px] font-semibold text-muted-foreground mb-1">
               <span>Đã bán {sold}</span>
               {isOutOfStock ? (
@@ -164,6 +137,35 @@ export function ProductCard({ product, rank, isNew }: ProductCardProps) {
             </div>
           </div>
         )}
+
+        {/* Price & Stock Section */}
+        <div className={cn("pt-2 flex items-center justify-between gap-2 w-full", sold === 0 ? "mt-auto" : "mt-1")}>
+          <div className="flex items-center gap-1.5 flex-wrap flex-1 min-w-0">
+            <span className={cn(
+              "font-extrabold text-lg sm:text-xl leading-none truncate max-w-full",
+              isOutOfStock ? "text-muted-foreground" : "text-red-600"
+            )}>
+              {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(salePrice)}
+            </span>
+            {hasDiscount && (
+              <span className="text-muted-foreground line-through text-[11px] sm:text-xs font-semibold leading-none mt-0.5 truncate max-w-full">
+                {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(originalPrice)}
+              </span>
+            )}
+          </div>
+          
+          {sold === 0 && (
+            <div className="shrink-0 text-[10px] sm:text-[11px] font-semibold text-muted-foreground text-right">
+              {isOutOfStock ? (
+                <span className="text-white bg-red-600 shadow-sm px-2 py-0.5 rounded-full font-bold">Hết hàng</span>
+              ) : (
+                <span>Còn {stock}</span>
+              )}
+            </div>
+          )}
+        </div>
+
+        
       </div>
     </div>
   );

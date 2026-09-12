@@ -217,6 +217,14 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
     }
   }, [debouncedCatSearch, open]);
 
+  // Auto-calculate total stock from variants
+  useEffect(() => {
+    if (form.variants.length > 0) {
+      const totalStock = form.variants.reduce((acc, v) => acc + (parseInt(v.stock_quantity) || 0), 0);
+      setForm(f => f.stock_quantity === String(totalStock) ? f : { ...f, stock_quantity: String(totalStock) });
+    }
+  }, [form.variants]);
+
   const handleQuickCreateCategory = async () => {
     if (!quickCreateName.trim()) return;
     setCreatingCategory(true);
@@ -552,9 +560,13 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
                   min="0"
                   placeholder="0"
                   value={form.stock_quantity}
+                  disabled={form.variants.length > 0}
                   onChange={(e) => setForm((f) => ({ ...f, stock_quantity: e.target.value }))}
-                  className="rounded-xl bg-background/50 border-border/50 focus-visible:ring-primary/30 h-11"
+                  className="rounded-xl bg-background/50 border-border/50 focus-visible:ring-primary/30 h-11 disabled:opacity-70"
                 />
+                {form.variants.length > 0 && (
+                  <p className="text-xs text-muted-foreground mt-1">Được tính tự động khớp với các Tùy chọn.</p>
+                )}
               </div>
             </div>
 
@@ -675,7 +687,7 @@ export function ProductForm({ open, onOpenChange, product, onSuccess }: ProductF
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 flex-1">
                         <Input placeholder="Tên (VD: Màu Đỏ)" value={v.name} onChange={(e) => updateVariant(i, "name", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                         <Input placeholder="Mã biến thể (VD: R01)" value={v.sku} onChange={(e) => updateVariant(i, "sku", e.target.value)} className="rounded-lg bg-background/50 h-10" />
-                        <Input placeholder="Giá cộng thêm" type="number" value={v.price_modifier} onChange={(e) => updateVariant(i, "price_modifier", e.target.value)} className="rounded-lg bg-background/50 h-10" />
+                        <Input placeholder="Giá chênh lệch (+/-)" type="number" value={v.price_modifier} onChange={(e) => updateVariant(i, "price_modifier", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                         <Input placeholder="Tồn kho" type="number" min="0" value={v.stock_quantity} onChange={(e) => updateVariant(i, "stock_quantity", e.target.value)} className="rounded-lg bg-background/50 h-10" />
                       </div>
                       <Button type="button" variant="destructive" size="icon" className="shrink-0 rounded-lg shadow-sm" onClick={() => removeVariant(i)}>
