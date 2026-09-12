@@ -63,7 +63,7 @@ export function SiteHeader() {
       setTheme(nextTheme);
       return;
     }
-    
+
     const { x, y } = themeClickPos.current;
     const endRadius = Math.hypot(
       Math.max(x, window.innerWidth - x),
@@ -531,16 +531,16 @@ export function SiteHeader() {
               <div className="bg-card border border-border/50 rounded-2xl shadow-xl p-2 relative before:absolute before:-top-2 before:left-8 before:w-4 before:h-4 before:bg-card before:border-t before:border-l before:border-border/50 before:rotate-45 before:transform">
                 <div className="grid grid-cols-1 gap-1 max-h-[360px] overflow-y-auto relative z-10 pr-1 hide-scrollbar">
                   {categories.length > 0 ? categories.map((cat) => (
-                      <Link key={cat.id} href={`/products?categories=${cat.id}`} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/5 hover:text-primary transition-colors text-sm font-medium text-foreground/80 group/item">
-                        {cat.image_url ? (
-                          <div className="w-7 h-7 rounded-full overflow-hidden border border-border/50 shrink-0 relative bg-background">
-                            <Image src={cat.image_url} alt={cat.name} fill sizes="26px" className="object-cover" />
-                          </div>
-                        ) : (
-                          <span className="w-7 h-7 flex items-center justify-center shrink-0 bg-muted rounded-full text-xs">🛒</span>
-                        )}
-                        <span className="flex-1 truncate">{cat.name}</span>
-                      </Link>
+                    <Link key={cat.id} href={`/products?categories=${cat.id}`} className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/5 hover:text-primary transition-colors text-sm font-medium text-foreground/80 group/item">
+                      {cat.image_url ? (
+                        <div className="w-7 h-7 rounded-full overflow-hidden border border-border/50 shrink-0 relative bg-background">
+                          <Image src={cat.image_url} alt={cat.name} fill sizes="26px" className="object-cover" />
+                        </div>
+                      ) : (
+                        <span className="w-7 h-7 flex items-center justify-center shrink-0 bg-muted rounded-full text-xs">🛒</span>
+                      )}
+                      <span className="flex-1 truncate">{cat.name}</span>
+                    </Link>
                   )) : (
                     <div className="p-4 text-center text-sm text-muted-foreground flex flex-col items-center justify-center gap-2">
                       <span className="animate-spin inline-block w-5 h-5 border-2 border-primary border-t-transparent rounded-full"></span>
@@ -572,84 +572,84 @@ export function SiteHeader() {
               />
             </form>
 
-          {/* Suggestions & History Dropdown */}
-          {showSuggestions && (searchQuery.trim().length > 0 || searchHistory.length > 0) && (
-            <div className="absolute top-full mt-3 w-full bg-card/100 backdrop-blur-md border border-border/50 rounded-[24px] shadow-[0_10px_40px_rgba(0,0,0,0.08)] overflow-hidden z-50">
-              {searchQuery.trim().length > 0 ? (
-                // Search Results View
-                isSearching ? (
-                  <div className="p-6 text-center text-sm font-medium text-muted-foreground flex items-center justify-center gap-2">
-                    <Image src="/icons/star.png" alt="Đang tìm kiếm" width={24} height={24} className="object-contain" /> Đang tìm kiếm...
-                  </div>
-                ) : searchResults.length > 0 ? (
-                  <div className="py-2">
-                    <div className="px-4 py-2 flex items-center justify-between text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                      <span>Gợi ý sản phẩm</span>
+            {/* Suggestions & History Dropdown */}
+            {showSuggestions && (searchQuery.trim().length > 0 || searchHistory.length > 0) && (
+              <div className="absolute top-full mt-3 w-full bg-card/100 backdrop-blur-md border border-border/50 rounded-[24px] shadow-[0_10px_40px_rgba(0,0,0,0.08)] overflow-hidden z-50">
+                {searchQuery.trim().length > 0 ? (
+                  // Search Results View
+                  isSearching ? (
+                    <div className="p-6 text-center text-sm font-medium text-muted-foreground flex items-center justify-center gap-2">
+                      <Image src="/icons/star.png" alt="Đang tìm kiếm" width={24} height={24} className="object-contain" /> Đang tìm kiếm...
                     </div>
-                    {searchResults.map((product) => {
-                      const price = product.price;
-                      const salePrice = product.discount_percent ? Math.round(price * (1 - product.discount_percent / 100)) : price;
-                      return (
-                        <Link
-                          key={product.id}
-                          href={`/product/${product.id}`}
-                          className="flex items-center gap-4 px-4 py-3 hover:bg-primary/5 transition-colors group"
-                          onClick={() => { setShowSuggestions(false); addToHistory(searchQuery); }}
-                        >
-                          <div className="w-12 h-12 rounded-[14px] overflow-hidden border border-border/50 group-hover:border-primary/30 transition-colors bg-muted/30 p-1 flex items-center justify-center">
-                            <Image width={48} height={48} unoptimized src={product.image_url || "https://placehold.co/48x48"} alt={product.name} className="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal" />
-                          </div>
-                          <div className="flex flex-col flex-1">
-                            <span className="text-sm font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">{product.name}</span>
-                            <span className="text-xs text-red-600 font-black mt-0.5">
-                              {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(salePrice)}
-                            </span>
-                          </div>
+                  ) : searchResults.length > 0 ? (
+                    <div className="py-2">
+                      <div className="px-4 py-2 flex items-center justify-between text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                        <span>Gợi ý sản phẩm</span>
+                      </div>
+                      {searchResults.map((product) => {
+                        const price = product.price;
+                        const salePrice = product.discount_percent ? Math.round(price * (1 - product.discount_percent / 100)) : price;
+                        return (
+                          <Link
+                            key={product.id}
+                            href={`/product/${product.id}`}
+                            className="flex items-center gap-4 px-4 py-3 hover:bg-primary/5 transition-colors group"
+                            onClick={() => { setShowSuggestions(false); addToHistory(searchQuery); }}
+                          >
+                            <div className="w-12 h-12 rounded-[14px] overflow-hidden border border-border/50 group-hover:border-primary/30 transition-colors bg-muted/30 p-1 flex items-center justify-center">
+                              <Image width={48} height={48} unoptimized src={product.image_url || "https://placehold.co/48x48"} alt={product.name} className="max-w-full max-h-full object-contain mix-blend-multiply dark:mix-blend-normal" />
+                            </div>
+                            <div className="flex flex-col flex-1">
+                              <span className="text-sm font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">{product.name}</span>
+                              <span className="text-xs text-red-600 font-black mt-0.5">
+                                {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(salePrice)}
+                              </span>
+                            </div>
+                          </Link>
+                        )
+                      })}
+                      <div className="border-t border-border/50 p-3 mt-1 bg-background/50">
+                        <Link href={`/products?search=${searchQuery}`} onClick={() => { setShowSuggestions(false); addToHistory(searchQuery); }} className="w-full py-2.5 rounded-[14px] bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary text-sm font-bold text-center block transition-all shadow-sm">
+                          Xem tất cả kết quả ({searchResults.length}+)
                         </Link>
-                      )
-                    })}
-                    <div className="border-t border-border/50 p-3 mt-1 bg-background/50">
-                      <Link href={`/products?search=${searchQuery}`} onClick={() => { setShowSuggestions(false); addToHistory(searchQuery); }} className="w-full py-2.5 rounded-[14px] bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary text-sm font-bold text-center block transition-all shadow-sm">
-                        Xem tất cả kết quả ({searchResults.length}+)
-                      </Link>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-6 text-center text-sm font-medium text-muted-foreground">Không tìm thấy sản phẩm nào phù hợp</div>
+                  )
+                ) : (
+                  // Search History View
+                  <div className="p-5">
+                    <div className="flex justify-between items-center mb-4 px-1">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><Search className="w-3.5 h-3.5" /> Lịch sử tìm kiếm</h4>
+                      <button
+                        type="button"
+                        onClick={() => { setSearchHistory([]); localStorage.removeItem("searchHistory"); }}
+                        className="text-xs font-medium text-muted-foreground hover:text-red-500 transition-colors bg-secondary/50 hover:bg-red-500/10 px-2.5 py-1.5 rounded-md"
+                      >
+                        Xoá tất cả
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {searchHistory.map((term, i) => (
+                        <Link
+                          key={`${term}-${i}`}
+                          href={`/products?search=${term}`}
+                          onClick={() => { setShowSuggestions(false); addToHistory(term); }}
+                          className="px-4 py-2 bg-background border border-border/60 hover:border-primary/50 hover:bg-primary/5 hover:text-primary hover:shadow-md rounded-full text-sm font-medium transition-all shadow-sm"
+                        >
+                          {term}
+                        </Link>
+                      ))}
                     </div>
                   </div>
-                ) : (
-                  <div className="p-6 text-center text-sm font-medium text-muted-foreground">Không tìm thấy sản phẩm nào phù hợp</div>
-                )
-              ) : (
-                // Search History View
-                <div className="p-5">
-                  <div className="flex justify-between items-center mb-4 px-1">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"><Search className="w-3.5 h-3.5" /> Lịch sử tìm kiếm</h4>
-                    <button
-                      type="button"
-                      onClick={() => { setSearchHistory([]); localStorage.removeItem("searchHistory"); }}
-                      className="text-xs font-medium text-muted-foreground hover:text-red-500 transition-colors bg-secondary/50 hover:bg-red-500/10 px-2.5 py-1.5 rounded-md"
-                    >
-                      Xoá tất cả
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {searchHistory.map((term, i) => (
-                      <Link
-                        key={`${term}-${i}`}
-                        href={`/products?search=${term}`}
-                        onClick={() => { setShowSuggestions(false); addToHistory(term); }}
-                        className="px-4 py-2 bg-background border border-border/60 hover:border-primary/50 hover:bg-primary/5 hover:text-primary hover:shadow-md rounded-full text-sm font-medium transition-all shadow-sm"
-                      >
-                        {term}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* Actions (Right) */}
+        {/* Actions (Right) */}
         <div className="flex items-center justify-end gap-1 flex-shrink-0 order-2 md:order-3">
           {/* Navigation Links (Desktop) */}
           <nav className="hidden lg:flex items-center gap-1 mr-3 bg-muted/40 p-1 rounded-full border border-border/40">
@@ -822,12 +822,12 @@ export function SiteHeader() {
                     <span className="font-bold text-[13.5px]">Giao diện tối</span>
                   </div>
                   {mounted && (
-                    <Switch 
-                      checked={theme === 'dark'} 
+                    <Switch
+                      checked={theme === 'dark'}
                       onPointerDown={(e) => {
                         themeClickPos.current = { x: e.clientX, y: e.clientY };
                       }}
-                      onCheckedChange={handleThemeSwitch} 
+                      onCheckedChange={handleThemeSwitch}
                     />
                   )}
                 </div>
