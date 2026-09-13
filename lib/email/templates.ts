@@ -30,10 +30,18 @@ export function generateOrderConfirmationHtml(data: OrderConfirmationData): stri
   const shortId = data.orderId ? data.orderId.split("-")[0].toUpperCase() : "ORD";
   const formattedTotal = Number(data.totalAmount || 0).toLocaleString("vi-VN") + " VND";
   const dateStr = data.createdAt
-    ? new Date(data.createdAt).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
+    ? new Date(data.createdAt).toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      })
     : new Date().toLocaleDateString("vi-VN");
 
-  const itemsHtml = data.items.map(item => `
+  const itemsHtml = data.items
+    .map(
+      (item) => `
     <tr>
       <td style="padding:12px 16px;border-bottom:1px solid #f0f0f0;font-size:14px;color:#2d2d2d;">
         <strong>${item.name}</strong>${item.variant ? `<br><span style="font-size:12px;color:#888;">Ph\u00e2n lo\u1ea1i: ${item.variant}</span>` : ""}
@@ -45,7 +53,9 @@ export function generateOrderConfirmationHtml(data: OrderConfirmationData): stri
         ${Number(item.price * item.quantity).toLocaleString("vi-VN")} VND
       </td>
     </tr>
-  `).join("");
+  `
+    )
+    .join("");
 
   return `<!DOCTYPE html>
 <html lang="vi">
@@ -63,7 +73,7 @@ export function generateOrderConfirmationHtml(data: OrderConfirmationData): stri
           <!-- Header -->
           <tr>
             <td style="background-color:#111827;padding:28px 32px;text-align:center;">
-              <p style="margin:0;font-size:24px;font-weight:bold;color:#f59e0b;letter-spacing:1px;">LUXE COMMERCE</p>
+              <p style="margin:0;font-size:24px;font-weight:bold;color:#f59e0b;letter-spacing:1px;">The Family Market</p>
             </td>
           </tr>
 
@@ -162,9 +172,16 @@ export function generateOrderDeliveredHtml(data: OrderDeliveredData): string {
   const shortId = data.orderId ? data.orderId.split("-")[0].toUpperCase() : "ORD";
   const formattedTotal = Number(data.totalAmount || 0).toLocaleString("vi-VN") + " VND";
   const dateStr = data.deliveredAt
-    ? new Date(data.deliveredAt).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
+    ? new Date(data.deliveredAt).toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      })
     : new Date().toLocaleDateString("vi-VN");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://shadcn-admin-dashboard-free-eight.vercel.app";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://shadcn-admin-dashboard-free-eight.vercel.app";
 
   return `<!DOCTYPE html>
 <html lang="vi">
@@ -182,7 +199,7 @@ export function generateOrderDeliveredHtml(data: OrderDeliveredData): string {
           <!-- Header -->
           <tr>
             <td style="background-color:#111827;padding:28px 32px;text-align:center;">
-              <p style="margin:0;font-size:24px;font-weight:bold;color:#f59e0b;letter-spacing:1px;">LUXE COMMERCE</p>
+              <p style="margin:0;font-size:24px;font-weight:bold;color:#f59e0b;letter-spacing:1px;">The Family Market</p>
             </td>
           </tr>
 
@@ -259,14 +276,23 @@ export function generateOrderConfirmationText(data: OrderConfirmationData): stri
   const shortId = data.orderId ? data.orderId.split("-")[0].toUpperCase() : "ORD";
   const formattedTotal = Number(data.totalAmount || 0).toLocaleString("vi-VN") + " VND";
   const dateStr = data.createdAt
-    ? new Date(data.createdAt).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
+    ? new Date(data.createdAt).toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      })
     : new Date().toLocaleDateString("vi-VN");
 
-  const itemsText = (data.items || []).map(item => 
-    `- ${item.name} ${item.variant ? `(${item.variant})` : ""} x${item.quantity}: ${Number(item.price * item.quantity).toLocaleString("vi-VN")} VND`
-  ).join("\n");
+  const itemsText = (data.items || [])
+    .map(
+      (item) =>
+        `- ${item.name} ${item.variant ? `(${item.variant})` : ""} x${item.quantity}: ${Number(item.price * item.quantity).toLocaleString("vi-VN")} VND`
+    )
+    .join("\n");
 
-  return `LUXE COMMERCE - XÁC NHẬN ĐƠN HÀNG #${shortId}
+  return `The Family Market - XÁC NHẬN ĐƠN HÀNG #${shortId}
 --------------------------------------------------
 Xin chào ${data.fullName || "Quý khách"},
 
@@ -293,11 +319,18 @@ export function generateOrderDeliveredText(data: OrderDeliveredData): string {
   const shortId = data.orderId ? data.orderId.split("-")[0].toUpperCase() : "ORD";
   const formattedTotal = Number(data.totalAmount || 0).toLocaleString("vi-VN") + " VND";
   const dateStr = data.deliveredAt
-    ? new Date(data.deliveredAt).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })
+    ? new Date(data.deliveredAt).toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      })
     : new Date().toLocaleDateString("vi-VN");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://shadcn-admin-dashboard-free-eight.vercel.app";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://shadcn-admin-dashboard-free-eight.vercel.app";
 
-  return `LUXE COMMERCE - GIAO HÀNG THÀNH CÔNG #${shortId}
+  return `The Family Market - GIAO HÀNG THÀNH CÔNG #${shortId}
 --------------------------------------------------
 Xin chào ${data.fullName || "Quý khách"},
 

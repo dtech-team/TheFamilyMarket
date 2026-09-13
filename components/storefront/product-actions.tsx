@@ -139,7 +139,13 @@ export function ProductActions({
         },
         product_variants: selectedVariant || null,
       });
-      toast.success("Đã thêm vào giỏ hàng thành công!");
+      toast.success("Đã thêm vào giỏ hàng thành công!", {
+        action: {
+          label: "Xem giỏ hàng",
+          onClick: () => router.push("/cart")
+        }
+      });
+      window.dispatchEvent(new Event("cart-updated"));
       return;
     }
 
@@ -150,7 +156,12 @@ export function ProductActions({
     if (error) {
       toast.error(error.message || "Có lỗi xảy ra khi thêm vào giỏ hàng!");
     } else {
-      toast.success("Đã thêm vào giỏ hàng thành công!");
+      toast.success("Đã thêm vào giỏ hàng thành công!", {
+        action: {
+          label: "Xem giỏ hàng",
+          onClick: () => router.push("/cart")
+        }
+      });
       window.dispatchEvent(new Event("cart-updated"));
     }
   };
@@ -254,21 +265,7 @@ export function ProductActions({
             </div>
           )}
 
-          {/* Sold Count & Stock Summary */}
-          <div className="pt-3 border-t border-border/40 flex items-center gap-4 text-sm font-medium">
-            {soldCount > 0 && (
-              <div className="flex items-center gap-1.5 text-muted-foreground">
-                <span className="text-foreground font-bold">{soldCount}</span> Đã bán
-              </div>
-            )}
-            
-            {(!variants || variants.length === 0) && (
-              <div className="flex items-center gap-1.5 text-muted-foreground">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500" />
-                Kho: {stockQuantity > 0 ? <span className="text-foreground font-bold">{stockQuantity}</span> : <span className="text-destructive font-bold">Hết hàng</span>}
-              </div>
-            )}
-          </div>
+          
         </div>
       </div>
 
@@ -326,7 +323,7 @@ export function ProductActions({
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap items-center gap-3 pt-2">
+      <div className="flex flex-nowrap items-center gap-3 pt-2">
         <button
           onClick={handleAddToCart}
           disabled={isOutOfStock || isAdding}

@@ -18,6 +18,101 @@ import { useAuth } from "@/components/providers/auth-provider";
 import { useAuthModal } from "@/lib/store/use-auth-modal";
 import { LuxeLoading } from "@/components/storefront/luxe-loading";
 import Link from "next/link";
+import { toast } from "sonner";
+
+function CartQuantityInput({ 
+  initialQuantity, 
+  maxStock, 
+  onUpdate, 
+  disabled 
+}: { 
+  initialQuantity: number; 
+  maxStock: number; 
+  onUpdate: (qty: number) => void; 
+  disabled: boolean;
+}) {
+  const [value, setValue] = useState(initialQuantity.toString());
+
+  useEffect(() => {
+    setValue(initialQuantity.toString());
+  }, [initialQuantity]);
+
+  const handleBlur = () => {
+    let parsed = parseInt(value, 10);
+    if (isNaN(parsed) || parsed < 1) {
+      parsed = 1;
+    }
+    
+    if (parsed > maxStock) {
+      parsed = maxStock;
+      toast.error(`Rất tiếc!`, {
+        description: `Sản phẩm này chỉ còn ${maxStock} cái trong kho.`,
+        duration: 3000,
+        className: "bg-red-50 border border-red-200 text-red-900 shadow-xl",
+      });
+    }
+
+    setValue(parsed.toString());
+    if (parsed !== initialQuantity) {
+      onUpdate(parsed);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.currentTarget.blur();
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-1 bg-muted/50 rounded-lg p-1 border border-border/50 transition-colors focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-7 w-7 rounded-md bg-background shadow-sm hover:bg-background/80 hover:text-primary transition-colors disabled:opacity-50"
+        onClick={() => {
+          if (initialQuantity > 1) onUpdate(initialQuantity - 1);
+        }}
+        disabled={disabled || initialQuantity <= 1}
+      >
+        <IconMinus className="h-3.5 w-3.5" />
+      </Button>
+      <input
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        value={value}
+        onChange={(e) => {
+          const v = e.target.value.replace(/[^0-9]/g, "");
+          setValue(v);
+        }}
+        onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+        disabled={disabled}
+        className="w-10 text-center text-sm font-bold bg-transparent border-none outline-none focus:ring-0 text-foreground"
+      />
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-7 w-7 rounded-md bg-background shadow-sm hover:bg-background/80 hover:text-primary transition-colors disabled:opacity-50"
+        onClick={() => {
+          if (initialQuantity < maxStock) {
+            onUpdate(initialQuantity + 1);
+          } else {
+            toast.error(`Rất tiếc!`, {
+              description: `Sản phẩm này chỉ còn ${maxStock} chiếc trong kho.`,
+              duration: 3000,
+              className: "bg-red-50 border border-red-200 text-red-900 shadow-xl",
+            });
+          }
+        }}
+        disabled={disabled}
+      >
+        <IconPlus className="h-3.5 w-3.5" />
+      </Button>
+    </div>
+  );
+}
 
 export default function CartPage() {
   const router = useRouter();
@@ -216,26 +311,12 @@ export default function CartPage() {
                                   </span>
                                 )}
                               </div>
-                              <div className="flex items-center gap-1 bg-muted/50 rounded-lg p-1 border border-border/50">
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-7 w-7 rounded-md bg-background shadow-sm hover:bg-background/80 hover:text-primary transition-colors"
-                                  onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                                  disabled={item.quantity <= 1}
-                                >
-                                  <IconMinus className="h-3.5 w-3.5" />
-                                </Button>
-                                <span className="w-8 text-center text-sm font-bold">{item.quantity}</span>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-7 w-7 rounded-md bg-background shadow-sm hover:bg-background/80 hover:text-primary transition-colors"
-                                  onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                                >
-                                  <IconPlus className="h-3.5 w-3.5" />
-                                </Button>
-                              </div>
+                              <CartQuantityInput 
+                                initialQuantity={item.quantity}
+                                maxStock={item.product_variants ? (item.product_variants.stock_quantity || 0) : (item.products?.stock_quantity || 0)}
+                                disabled={isUpdating}
+                                onUpdate={(qty) => handleUpdateQuantity(item.id, qty)}
+                              />
                             </div>
                           </div>
                         </div>
@@ -251,25 +332,13 @@ export default function CartPage() {
                         </div>
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
-                        <div className="flex items-center justify-center gap-1 bg-muted/50 rounded-xl p-1 border border-border/50 w-fit mx-auto">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-background shadow-sm hover:bg-background/80 hover:text-primary shrink-0 transition-colors"
-                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
-                            disabled={item.quantity <= 1}
-                          >
-                            <IconMinus className="h-3.5 w-3.5" />
-                          </Button>
-                          <span className="w-8 sm:w-10 text-center font-bold text-sm sm:text-base">{item.quantity}</span>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-background shadow-sm hover:bg-background/80 hover:text-primary shrink-0 transition-colors"
-                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
-                          >
-                            <IconPlus className="h-3.5 w-3.5" />
-                          </Button>
+                        <div className="flex items-center justify-center w-fit mx-auto">
+                          <CartQuantityInput 
+                            initialQuantity={item.quantity}
+                            maxStock={item.product_variants ? (item.product_variants.stock_quantity || 0) : (item.products?.stock_quantity || 0)}
+                            disabled={isUpdating}
+                            onUpdate={(qty) => handleUpdateQuantity(item.id, qty)}
+                          />
                         </div>
                       </TableCell>
                       <TableCell className="hidden sm:table-cell text-right font-semibold text-primary text-sm sm:text-base">

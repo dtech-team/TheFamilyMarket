@@ -44,6 +44,7 @@ export async function getFeaturedReviews(limit = 10) {
       text: review.comment || "",
       timeAgo: formatDistanceToNow(new Date(review.created_at), { addSuffix: true, locale: vi }),
       product: review.products?.name || "Sản phẩm",
+      productId: review.products?.id || "",
       productImage: productImage,
     };
   }).filter((r: any) => r.text && r.text.length > 10); // Lọc bớt review quá ngắn

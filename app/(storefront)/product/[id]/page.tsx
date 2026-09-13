@@ -49,26 +49,49 @@ export default async function ProductDetailsPage({
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 space-y-4">
-              <div className="flex flex-wrap items-center gap-3">
-                {product.brand && (
-                  <span className="px-3 py-1.5 bg-primary/10 text-primary font-bold text-xs rounded-full uppercase tracking-widest border border-primary/20">
-                    {product.brand}
-                  </span>
-                )}
-                <span className="flex items-center text-muted-foreground font-medium text-xs bg-muted/30 px-3 py-1.5 rounded-full border border-border/50">
-                  {product.product_reviews?.length ? (
-                    <>
-                      <Star className="size-4 mr-1.5 text-amber-500 fill-amber-500 inline-block" />
-                      <span className="font-bold text-foreground">
-                        {(product.product_reviews.reduce((acc: number, curr: any) => acc + curr.rating, 0) / product.product_reviews.length).toFixed(1)}
-                      </span>
-                      <span className="ml-1 opacity-80">({product.product_reviews.length} Đánh giá)</span>
-                    </>
-                  ) : (
-                    <span>Chưa có đánh giá</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                {/* Left Side: Brand & Rating */}
+                <div className="flex flex-wrap items-center justify-start gap-2">
+                  {product.brand && (
+                    <span className="px-3 py-1.5 bg-primary/10 text-primary font-bold text-xs rounded-full uppercase tracking-widest border border-primary/20">
+                      {product.brand}
+                    </span>
                   )}
-                </span>
+                  <span className="flex items-center text-muted-foreground font-medium text-xs bg-muted/30 px-3 py-1.5 rounded-full border border-border/50">
+                    {product.product_reviews?.length ? (
+                      <>
+                        <Star className="size-4 mr-1.5 text-amber-500 fill-amber-500 inline-block" />
+                        <span className="font-bold text-foreground">
+                          {(product.product_reviews.reduce((acc: number, curr: any) => acc + curr.rating, 0) / product.product_reviews.length).toFixed(1)}
+                        </span>
+                        <span className="ml-1 opacity-80">({product.product_reviews.length} Đánh giá)</span>
+                      </>
+                    ) : (
+                      <span>Chưa có đánh giá</span>
+                    )}
+                  </span>
+                </div>
+
+                {/* Right Side: Sold Count & Stock Summary */}
+                <div className="flex flex-wrap items-center justify-end gap-2">
+                  {/* Sold Count */}
+                  {(product.sold_count || 0) > 0 && (
+                    <span className="flex items-center text-muted-foreground font-medium text-xs bg-muted/30 px-3 py-1.5 rounded-full border border-border/50">
+                      Đã bán <span className="text-foreground font-bold ml-1">{product.sold_count}</span> 
+                    </span>
+                  )}
+                  
+                  {/* Stock Summary */}
+                  {(!product.product_variants || product.product_variants.length === 0) && (
+                    <span className="flex items-center text-muted-foreground font-medium text-xs bg-muted/30 px-3 py-1.5 rounded-full border border-border/50">
+                      <span className={`inline-block w-1.5 h-1.5 rounded-full mr-1.5 ${(product.stock_quantity || 0) > 0 ? "bg-green-500" : "bg-red-500"}`} />
+                      Kho: {(product.stock_quantity || 0) > 0 ? <span className="text-foreground font-bold ml-1">{product.stock_quantity}</span> : <span className="text-destructive font-bold ml-1">Hết hàng</span>}
+                    </span>
+                  )}
+                </div>
               </div>
+
+              
               
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-foreground tracking-tight leading-[1.1]">{product.name}</h1>
             </div>

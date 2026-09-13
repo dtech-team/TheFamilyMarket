@@ -71,7 +71,7 @@ export function CountdownTimer() {
   const formatNum = (num: number) => num.toString().padStart(2, "0");
 
   return (
-    <div className="flex gap-4">
+    <div className="flex justify-center items-center gap-4">
       <div className="flex flex-col items-center">
         <div className="w-14 h-14 bg-gradient-to-b from-red-500 to-yellow-500 text-white rounded-lg flex items-center justify-center text-2xl font-bold shadow-md mb-1">
           {formatNum(timeLeft.hours)}
