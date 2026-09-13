@@ -15,7 +15,7 @@ export function SiteFooter() {
           <Link href="/" className="group text-xl md:text-2xl font-black tracking-tighter inline-flex items-center gap-2.5 mb-6 transition-all duration-300">
             <BrandLogo />
           </Link>
-          <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{siteConfig.description}</p>
+          <p className="text-sm text-muted-foreground  leading-relaxed">{siteConfig.description}</p>
           {/* <div className="flex gap-3">
             <div className="w-10 h-10 rounded-[12px] bg-background/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:bg-primary hover:border-primary/50 hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer"><FacebookIcon className="w-5 h-5" /></div>
             <div className="w-10 h-10 rounded-[12px] bg-background/50 border border-border/50 flex items-center justify-center text-muted-foreground hover:bg-primary hover:border-primary/50 hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer"><IconBrandInstagram className="w-5 h-5" /></div>

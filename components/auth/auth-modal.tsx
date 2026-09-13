@@ -24,7 +24,7 @@ import { BrandLogo } from "@/components/ui/brand-logo";
 export function AuthModal() {
   const router = useRouter();
   const { showLockedAlert } = useAuth();
-  const { isOpen, closeModal, view, setView } = useAuthModal();
+  const { isOpen, closeModal, view, setView, redirectPath } = useAuthModal();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -106,9 +106,10 @@ export function AuthModal() {
         router.push("/dashboard");
       } else if (typeof window !== "undefined" && window.location.pathname === "/cart") {
         router.push("/checkout");
-      } else {
-        router.push("/");
+      } else if (redirectPath) {
+        router.push(redirectPath);
       }
+      // else: stay on current page, no redirect needed
     } catch (err: any) {
       let msg = err.message || "Lỗi đăng nhập";
       if (msg === "Invalid login credentials") msg = "Email hoặc mật khẩu không chính xác.";

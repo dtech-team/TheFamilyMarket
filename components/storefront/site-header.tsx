@@ -496,23 +496,23 @@ export function SiteHeader() {
                     <div className="flex gap-1 bg-muted/50 p-1 rounded-xl w-full border border-border/50">
                       <button
                         onClick={(e) => { e.preventDefault(); setTheme('light'); }}
-                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'light' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200", theme === 'light' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50 scale-[1.04]" : "text-muted-foreground hover:text-foreground hover:bg-background/50 hover:scale-[1.02]")}
                       >
-                        <Sun className="w-4 h-4" />
+                        <Sun className={cn("w-4 h-4 transition-transform duration-300", theme === 'light' ? "rotate-12 scale-110" : "")} />
                         <span className="text-[11px] font-semibold">Sáng</span>
                       </button>
                       <button
                         onClick={(e) => { e.preventDefault(); setTheme('dark'); }}
-                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'dark' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200", theme === 'dark' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50 scale-[1.04]" : "text-muted-foreground hover:text-foreground hover:bg-background/50 hover:scale-[1.02]")}
                       >
-                        <Moon className="w-4 h-4" />
+                        <Moon className={cn("w-4 h-4 transition-transform duration-300", theme === 'dark' ? "-rotate-12 scale-110" : "")} />
                         <span className="text-[11px] font-semibold">Tối</span>
                       </button>
                       <button
                         onClick={(e) => { e.preventDefault(); setTheme('system'); }}
-                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'system' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                        className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200", theme === 'system' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50 scale-[1.04]" : "text-muted-foreground hover:text-foreground hover:bg-background/50 hover:scale-[1.02]")}
                       >
-                        <Monitor className="w-4 h-4" />
+                        <Monitor className={cn("w-4 h-4 transition-transform duration-300", theme === 'system' ? "scale-110" : "")} />
                         <span className="text-[11px] font-semibold">Hệ thống</span>
                       </button>
                     </div>
@@ -846,23 +846,23 @@ export function SiteHeader() {
                   <div className="flex gap-1 bg-muted/50 p-1 rounded-xl w-full border border-border/50">
                     <button
                       onClick={(e) => { e.preventDefault(); setTheme('light'); }}
-                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'light' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200", theme === 'light' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50 scale-[1.04]" : "text-muted-foreground hover:text-foreground hover:bg-background/50 hover:scale-[1.02]")}
                     >
-                      <Sun className="w-4 h-4" />
+                      <Sun className={cn("w-4 h-4 transition-transform duration-300", theme === 'light' ? "rotate-12 scale-110" : "")} />
                       <span className="text-[11px] font-semibold">Sáng</span>
                     </button>
                     <button
                       onClick={(e) => { e.preventDefault(); setTheme('dark'); }}
-                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'dark' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200", theme === 'dark' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50 scale-[1.04]" : "text-muted-foreground hover:text-foreground hover:bg-background/50 hover:scale-[1.02]")}
                     >
-                      <Moon className="w-4 h-4" />
+                      <Moon className={cn("w-4 h-4 transition-transform duration-300", theme === 'dark' ? "-rotate-12 scale-110" : "")} />
                       <span className="text-[11px] font-semibold">Tối</span>
                     </button>
                     <button
                       onClick={(e) => { e.preventDefault(); setTheme('system'); }}
-                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all", theme === 'system' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50" : "text-muted-foreground hover:text-foreground hover:bg-background/50")}
+                      className={cn("flex-1 py-1.5 flex flex-col items-center justify-center gap-1 rounded-lg transition-all duration-200", theme === 'system' ? "bg-background shadow-sm text-foreground ring-1 ring-border/50 scale-[1.04]" : "text-muted-foreground hover:text-foreground hover:bg-background/50 hover:scale-[1.02]")}
                     >
-                      <Monitor className="w-4 h-4" />
+                      <Monitor className={cn("w-4 h-4 transition-transform duration-300", theme === 'system' ? "scale-110" : "")} />
                       <span className="text-[11px] font-semibold">Hệ thống</span>
                     </button>
                   </div>

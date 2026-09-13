@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Home, Heart, ShoppingBag, ShoppingCart, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthModal } from "@/lib/store/use-auth-modal";
@@ -32,6 +32,7 @@ const navItems = [
     href: "/account/orders",
     icon: ShoppingCart,
     matchExact: false,
+    requireAuth: true,
   },
   {
     label: "Tài khoản",
@@ -44,6 +45,7 @@ const navItems = [
 
 export function MobileBottomNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const { user } = useAuth();
   const { openModal } = useAuthModal();
 
@@ -66,27 +68,17 @@ export function MobileBottomNav() {
         {navItems.map((item) => {
           const active = activeItem?.href === item.href;
           const Icon = item.icon;
+          const needsAuth = item.requireAuth && !user;
 
-          const handleClick = (e: React.MouseEvent) => {
-            if (item.requireAuth && !user) {
-              e.preventDefault();
-              openModal("login");
-            }
-          };
+          const sharedClassName = cn(
+            "flex flex-col items-center justify-center gap-0.5 py-2 px-3 min-w-[64px] transition-colors relative",
+            active
+              ? "text-primary bg-primary/10"
+              : "text-black dark:text-white hover:text-foreground"
+          );
 
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              onClick={handleClick}
-              className={cn(
-                "flex flex-col items-center justify-center gap-0.5 py-2 px-3 min-w-[64px] transition-colors relative",
-                active
-                  ? "text-primary bg-primary/10"
-                  : "text-black dark:text-white hover:text-foreground"
-              )}
-            >
-              {/* Active indicator line */}
+          const iconNode = (
+            <>
               {active && (
                 <span className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-primary rounded-full" />
               )}
@@ -104,6 +96,31 @@ export function MobileBottomNav() {
               >
                 {item.label}
               </span>
+            </>
+          );
+
+          if (needsAuth) {
+            // Use a plain button — no navigation, just open auth modal
+            return (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => openModal("login")}
+                className={sharedClassName}
+              >
+                {iconNode}
+              </button>
+            );
+          }
+
+          // Normal nav item — use Link
+          return (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={sharedClassName}
+            >
+              {iconNode}
             </Link>
           );
         })}
