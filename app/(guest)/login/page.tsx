@@ -10,6 +10,7 @@ import { getProfile } from "@/lib/services/profile.service";
 import { getRole } from "@/lib/services/role.service";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function LoginPageV1() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function LoginPageV1() {
     e.preventDefault();
     setLoading(true);
     setErrorMsg("");
-    
+
     const { data: authData, error } = await authService.login(email, password);
     if (error) {
       let message = error.message;
@@ -37,7 +38,7 @@ export default function LoginPageV1() {
       setLoading(false);
       return;
     }
-    
+
     if (authData?.user) {
       const { data: profileData } = await getProfile(authData.user.id);
       if (profileData?.role_id) {
@@ -55,7 +56,7 @@ export default function LoginPageV1() {
         }
       }
     }
-    
+
     // Fallback if no role
     setErrorMsg("Truy cập bị từ chối: Không thể xác thực quyền truy cập.");
     authService.logout();
@@ -81,19 +82,19 @@ export default function LoginPageV1() {
           <Image fill unoptimized src="/images/cover.png" alt="Admin Portal Background" className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/40 to-transparent" />
-        
+
         {/* Abstract decorative circles */}
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-white/10 blur-3xl" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-300/20 blur-3xl" />
-        
+
         <div className="relative z-10 p-12 text-center animate-in fade-in zoom-in duration-700 max-w-lg">
           <div className="mb-8 flex justify-center">
             <div >
-              <Image 
-                src="/icons/admin_panel.png" 
-                alt="Logo" 
-                width={100} 
-                height={100} 
+              <Image
+                src="/icons/admin_panel.png"
+                alt="Logo"
+                width={100}
+                height={100}
                 className="object-contain"
               />
             </div>
@@ -109,9 +110,9 @@ export default function LoginPageV1() {
 
       {/* Right panel - Login form */}
       <div className="flex w-full lg:w-1/2 items-center justify-center p-6 sm:p-12 relative bg-white">
-        
+
         <div className="w-full max-w-md space-y-8 relative z-10 animate-in slide-in-from-bottom-8 duration-500">
-          
+
           {/* Logo / Header */}
           <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
             <div className="flex items-center gap-3 mb-8">
@@ -122,8 +123,9 @@ export default function LoginPageV1() {
                 <span className="text-xl font-black tracking-tight text-slate-900">TheFamilyMarket</span>
                 <span className="text-[10px] font-bold text-emerald-600 tracking-widest uppercase mt-1">Administrator</span>
               </div>
+
             </div>
-            
+
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Đăng nhập</h2>
             <p className="mt-2 text-sm text-slate-500 font-medium">
               Vui lòng nhập thông tin xác thực để truy cập bảng điều khiển.
@@ -178,9 +180,9 @@ export default function LoginPageV1() {
             )}
 
             <div className="pt-2 space-y-4">
-              <Button 
-                type="submit" 
-                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all active:scale-[0.98]" 
+              <Button
+                type="submit"
+                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all active:scale-[0.98]"
                 disabled={loading}
               >
                 {loading ? (
@@ -216,8 +218,11 @@ export default function LoginPageV1() {
               </Button>
             </div>
           </form>
-
-          <div className="mt-12 text-center text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+          <Link className="flex items-center justify-center w-full gap-2 m-0 " href="/">
+            <Image width={20} height={20} src="/icons/back.png" alt="Home" />
+            <span>Về trang chủ</span>
+          </Link>
+          <div className="mt-6 text-center text-[11px] font-bold text-slate-400 uppercase tracking-wider">
             &copy; {new Date().getFullYear()} TheFamilyMarket. Hệ thống nội bộ.
           </div>
         </div>

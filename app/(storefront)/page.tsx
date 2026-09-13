@@ -3,13 +3,16 @@ import { FlashSale } from "@/components/storefront/flash-sale";
 import { NewArrivals } from "@/components/storefront/new-arrivals";
 import { BestSellers } from "@/components/storefront/best-sellers";
 import { HomeCategorySidebar } from "@/components/storefront/home-category-sidebar";
-
+import { TestimonialsSection } from "@/components/storefront/testimonials";
+import { getFeaturedReviews } from "@/lib/services/review.service";
 import { MobileCategoryScroll } from "@/components/storefront/mobile-category-scroll";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default function StorefrontHomePage() {
+export default async function StorefrontHomePage() {
+  const reviews = await getFeaturedReviews(8);
+
   return (
     <div className="max-w-[1400px] mx-auto px-4 lg:px-6 py-4 lg:py-6 space-y-8">
       {/* Top row: Sidebar + Banner */}
@@ -28,6 +31,7 @@ export default function StorefrontHomePage() {
         <FlashSale />
         <NewArrivals />
         <BestSellers />
+        <TestimonialsSection testimonials={reviews} />
       </div>
     </div>
   );
