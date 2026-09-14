@@ -5,7 +5,7 @@ export type AuthView = "login" | "register" | "forgot_password";
 interface AuthModalState {
   isOpen: boolean;
   view: AuthView;
-  redirectPath: string | null;
+  redirectPath: string | undefined;
   openModal: (view?: AuthView, redirectPath?: string) => void;
   closeModal: () => void;
   setView: (view: AuthView) => void;
@@ -14,8 +14,8 @@ interface AuthModalState {
 export const useAuthModal = create<AuthModalState>((set) => ({
   isOpen: false,
   view: "login",
-  redirectPath: null,
-  openModal: (view = "login", redirectPath = null) => set({ isOpen: true, view, redirectPath }),
+  redirectPath: undefined,
+  openModal: (view = "login", redirectPath = undefined) => set({ isOpen: true, view, redirectPath }),
   closeModal: () => set({ isOpen: false }),
   setView: (view) => set({ view }),
 }));
